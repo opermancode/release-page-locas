@@ -3,143 +3,275 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Locas App – Smart Business Manager</title>
+  <title>Locas App | Smart Business Manager & Invoicing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
   <style>
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      margin: 0; padding: 0;
-      background: #fdfdfd;
-      color: #333;
+    :root {
+      --primary: #FF6B00;
+      --primary-dark: #E65A00;
+      --secondary: #1A1A1B;
+      --bg-light: #F9FAFB;
+      --text-main: #1F2937;
+      --text-muted: #6B7280;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
+
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg-light);
+      color: var(--text-main);
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    nav {
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      z-index: 1000;
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
     /* Hero Section */
     header {
-      background: linear-gradient(135deg, #FF6B00, #FF8C42);
-      color: white;
+      background: radial-gradient(circle at top right, #fff5ed, #ffffff);
+      padding: 8rem 5% 6rem;
       text-align: center;
-      padding: 5rem 2rem;
-      position: relative;
     }
-    header img {
-      width: 140px;
-      height: 140px;
-      border-radius: 20%;
-      margin-bottom: 1rem;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+
+    .app-icon {
+      width: 120px;
+      height: 120px;
+      border-radius: 24px;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 40px rgba(255, 107, 0, 0.2);
+      animation: float 6s ease-in-out infinite;
     }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
     h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
       margin: 0;
-      font-size: 3.5rem;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      background: linear-gradient(to right, #1A1A1B, #FF6B00);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
-    p.tagline {
-      font-size: 1.4rem;
-      margin-top: 0.5rem;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+
+    .tagline {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 1.5rem auto 2.5rem;
     }
-    .cta {
-      margin-top: 2rem;
+
+    /* CTA Buttons */
+    .cta-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
     }
-    .cta a {
-      display: inline-block;
-      margin: 0.5rem;
+
+    .btn {
       padding: 1rem 2rem;
-      background: white;
-      color: #FF6B00;
+      border-radius: 12px;
+      font-weight: 600;
       text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      transition: all 0.3s ease;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
-    .cta a:hover {
-      background: #333;
+
+    .btn-primary {
+      background: var(--primary);
       color: white;
-      transform: scale(1.05);
+      box-shadow: 0 4px 14px rgba(255, 107, 0, 0.3);
     }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #000;
+      transform: translateY(-2px);
+    }
+
     /* Features Section */
-    .features {
+    .section-title {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 2rem;
-      padding: 4rem 2rem;
+      padding: 4rem 5%;
       max-width: 1200px;
       margin: auto;
     }
-    .feature {
-      background: #fff;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-      text-align: center;
-      transition: transform 0.3s ease;
+
+    .feature-card {
+      background: white;
+      padding: 2.5rem;
+      border-radius: 24px;
+      border: 1px solid #f0f0f0;
+      transition: var(--transition);
     }
-    .feature:hover {
-      transform: translateY(-5px);
+
+    .feature-card:hover {
+      border-color: var(--primary);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     }
-    .feature h3 {
-      margin-bottom: 0.5rem;
-      color: #FF6B00;
+
+    .feature-icon {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      display: block;
     }
+
+    .feature-card h3 {
+      margin: 0 0 1rem 0;
+      font-size: 1.4rem;
+    }
+
     /* Testimonials */
     .testimonials {
-      background: #f4f4f4;
-      padding: 4rem 2rem;
+      background: #1A1A1B;
+      color: white;
+      padding: 6rem 5%;
       text-align: center;
     }
-    .testimonial {
-      max-width: 700px;
-      margin: auto;
-      font-style: italic;
-      color: #555;
-      margin-bottom: 1.5rem;
+
+    .testimonial-card {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 1.5rem;
+      line-height: 1.4;
+      font-weight: 400;
+      opacity: 0.9;
     }
+
+    .author {
+      margin-top: 2rem;
+      display: block;
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
     /* Footer */
     footer {
-      background: #333;
-      color: white;
+      padding: 4rem 5%;
       text-align: center;
-      padding: 1.5rem;
+      border-top: 1px solid #eee;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      header { padding-top: 5rem; }
+      .cta-group { flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 <body>
+
+  <nav>
+    <a href="#" class="logo">Locas.</a>
+    <div>
+      <a href="#features" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:0.9rem;">Features</a>
+    </div>
+  </nav>
+
   <header>
-    <img src="icon.png" alt="Locas App Icon">
-    <h1>Locas App</h1>
-    <p class="tagline">Smart Business & Expense Manager – Track, Sell, Purchase, and Invoice with ease.</p>
-    <div class="cta">
-      <a href="https://expo.dev/artifacts/eas/nApyQ2nnXdFELZA5aMcgk9.apk" download>⬇️ Download for Android</a>
-      <a href="https://expo.dev/accounts/your-account/projects/locas">📱 Try on Expo Go (iOS)</a>
+    <img src="icon.png" alt="Locas App Icon" class="app-icon">
+    <h1>Manage your business,<br>not your paperwork.</h1>
+    <p class="tagline">The all-in-one suite for small businesses to track sales, manage inventory, and send professional invoices in seconds.</p>
+    
+    <div class="cta-group">
+      <a href="https://expo.dev/artifacts/eas/nApyQ2nnXdFELZA5aMcgk9.apk" class="btn btn-primary" download>
+        Download for Android
+      </a>
+      <a href="https://expo.dev/accounts/your-account/projects/locas" class="btn btn-secondary">
+        Try on iOS (Expo Go)
+      </a>
     </div>
   </header>
 
-  <section class="features">
-    <div class="feature">
-      <h3>📊 Business Tracking</h3>
-      <p>Monitor purchases, sales, and expenses in real-time with powerful analytics.</p>
+  <section id="features" class="features-grid">
+    <div class="feature-card">
+      <span class="feature-icon">📊</span>
+      <h3>Business Analytics</h3>
+      <p>Real-time insights into your profit, loss, and cash flow. Never guess your numbers again.</p>
     </div>
-    <div class="feature">
-      <h3>🧾 Free Invoices</h3>
-      <p>Create professional invoices instantly with customizable templates.</p>
+    <div class="feature-card">
+      <span class="feature-icon">🧾</span>
+      <h3>Instant Invoicing</h3>
+      <p>Generate PDF invoices on the fly. Send them via WhatsApp or Email instantly.</p>
     </div>
-    <div class="feature">
-      <h3>🎨 Modern Templates</h3>
-      <p>Choose from stylish invoice designs to match your brand identity.</p>
+    <div class="feature-card">
+      <span class="feature-icon">🔗</span>
+      <h3>Payment Links</h3>
+      <p>Integrate dynamic QR codes so your customers can pay you faster with UPI or Cards.</p>
     </div>
-    <div class="feature">
-      <h3>🔗 QR Code Payments</h3>
-      <p>Embed QR codes in invoices for seamless payment and tracking.</p>
+    <div class="feature-card">
+      <span class="feature-icon">📦</span>
+      <h3>Inventory Control</h3>
+      <p>Keep track of your stock levels and get notified when you're running low on supplies.</p>
     </div>
   </section>
 
   <section class="testimonials">
-    <h2>What Our Users Say</h2>
-    <p class="testimonial">“Locas has transformed the way I manage my business. Invoices look professional, and tracking expenses is effortless.”</p>
-    <p class="testimonial">“The QR code feature is a game-changer. Clients love the convenience, and I love the speed.”</p>
+    <div class="testimonial-card">
+      "Locas has saved me at least 5 hours a week in bookkeeping. The invoices are beautiful and my clients actually pay faster now."
+      <span class="author">— Local Store Owner</span>
+    </div>
   </section>
 
   <footer>
-    <p>&copy; 2026 Locas App – locas.store | Built by Omkar Jagtap</p>
+    <p>&copy; 2026 Locas App – <a href="https://locas.store" style="color:var(--primary); text-decoration:none;">locas.store</a></p>
+    <p>Built with ❤️ by Omkar Jagtap</p>
   </footer>
+
 </body>
 </html>
