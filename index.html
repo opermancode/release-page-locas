@@ -11,25 +11,31 @@
       background: #fdfdfd;
       color: #333;
     }
+    /* Hero Section */
     header {
       background: linear-gradient(135deg, #FF6B00, #FF8C42);
       color: white;
       text-align: center;
-      padding: 4rem 1rem;
+      padding: 5rem 2rem;
+      position: relative;
     }
     header img {
-      width: 120px;
-      height: 120px;
+      width: 140px;
+      height: 140px;
       border-radius: 20%;
       margin-bottom: 1rem;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
     }
     h1 {
       margin: 0;
-      font-size: 3rem;
+      font-size: 3.5rem;
     }
     p.tagline {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
       margin-top: 0.5rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .cta {
       margin-top: 2rem;
@@ -41,49 +47,58 @@
       background: white;
       color: #FF6B00;
       text-decoration: none;
-      border-radius: 6px;
+      border-radius: 8px;
       font-weight: bold;
-      transition: background 0.3s, color 0.3s;
+      transition: all 0.3s ease;
     }
     .cta a:hover {
       background: #333;
       color: white;
+      transform: scale(1.05);
     }
+    /* Features Section */
     .features {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      padding: 3rem 2rem;
+      gap: 2rem;
+      padding: 4rem 2rem;
       max-width: 1200px;
       margin: auto;
     }
     .feature {
       background: #fff;
       padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
       text-align: center;
+      transition: transform 0.3s ease;
+    }
+    .feature:hover {
+      transform: translateY(-5px);
     }
     .feature h3 {
       margin-bottom: 0.5rem;
       color: #FF6B00;
     }
+    /* Testimonials */
     .testimonials {
       background: #f4f4f4;
-      padding: 3rem 2rem;
+      padding: 4rem 2rem;
       text-align: center;
     }
     .testimonial {
-      max-width: 600px;
+      max-width: 700px;
       margin: auto;
       font-style: italic;
       color: #555;
+      margin-bottom: 1.5rem;
     }
+    /* Footer */
     footer {
       background: #333;
       color: white;
       text-align: center;
-      padding: 1rem;
+      padding: 1.5rem;
     }
   </style>
 </head>
@@ -91,7 +106,7 @@
   <header>
     <img src="icon.png" alt="Locas App Icon">
     <h1>Locas App</h1>
-    <p class="tagline">Manage your business, track expenses, and create invoices effortlessly.</p>
+    <p class="tagline">Smart Business & Expense Manager – Track, Sell, Purchase, and Invoice with ease.</p>
     <div class="cta">
       <a href="https://expo.dev/artifacts/eas/nApyQ2nnXdFELZA5aMcgk9.apk" download>⬇️ Download for Android</a>
       <a href="https://expo.dev/accounts/your-account/projects/locas">📱 Try on Expo Go (iOS)</a>
@@ -101,7 +116,7 @@
   <section class="features">
     <div class="feature">
       <h3>📊 Business Tracking</h3>
-      <p>Stay on top of purchases, sales, and expenses with real-time insights.</p>
+      <p>Monitor purchases, sales, and expenses in real-time with powerful analytics.</p>
     </div>
     <div class="feature">
       <h3>🧾 Free Invoices</h3>
@@ -109,7 +124,7 @@
     </div>
     <div class="feature">
       <h3>🎨 Modern Templates</h3>
-      <p>Choose from stylish, ready-made invoice designs to match your brand identity.</p>
+      <p>Choose from stylish invoice designs to match your brand identity.</p>
     </div>
     <div class="feature">
       <h3>🔗 QR Code Payments</h3>
