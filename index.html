@@ -3,10 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Locas App | Smart Business Manager & Invoicing</title>
+  <title>Locas App | Advanced Business Management</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest"></script>
-  
   <style>
     :root {
       --primary: #FF6B00;
@@ -18,199 +16,105 @@
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
-    * {
-      box-sizing: border-box;
-      scroll-behavior: smooth;
-    }
-
     body {
       font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 0;
+      margin: 0; padding: 0;
       background: var(--bg-light);
       color: var(--text-main);
       line-height: 1.6;
     }
 
-    /* Navigation */
+    /* --- Navigation --- */
     nav {
-      position: sticky;
-      top: 0;
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(10px);
+      position: sticky; top: 0;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
       z-index: 1000;
-      padding: 1rem 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      padding: 1rem 10%;
+      display: flex; justify-content: space-between; align-items: center;
       border-bottom: 1px solid rgba(0,0,0,0.05);
     }
 
-    .logo {
-      font-weight: 800;
-      font-size: 1.5rem;
-      color: var(--primary);
-      text-decoration: none;
-    }
+    .logo { font-weight: 800; font-size: 1.5rem; color: var(--primary); text-decoration: none; }
 
-    /* Hero Section */
+    /* --- Hero Section --- */
     header {
+      padding: 6rem 10% 4rem;
+      text-align: center;
       background: radial-gradient(circle at top right, #fff5ed, #ffffff);
-      padding: 8rem 5% 6rem;
-      text-align: center;
     }
 
-    .app-icon {
-      width: 120px;
-      height: 120px;
+    h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin: 0; letter-spacing: -0.03em; line-height: 1.1; color: var(--secondary); }
+    h1 span { color: var(--primary); }
+    .tagline { font-size: 1.2rem; color: var(--text-muted); max-width: 650px; margin: 1.5rem auto 2.5rem; }
+
+    /* --- Interactive Invoice Preview --- */
+    .invoice-preview-container {
+      max-width: 900px;
+      margin: 2rem auto;
+      background: white;
+      padding: 2rem;
       border-radius: 24px;
-      margin-bottom: 2rem;
-      box-shadow: 0 20px 40px rgba(255, 107, 0, 0.2);
-      animation: float 6s ease-in-out infinite;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.05);
+      border: 1px solid #eee;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    .color-picker {
+      display: flex; gap: 1rem; justify-content: center; margin-bottom: 2rem; align-items: center;
     }
 
-    h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      font-weight: 800;
-      margin: 0;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      background: linear-gradient(to right, #1A1A1B, #FF6B00);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .color-dot {
+      width: 35px; height: 35px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: var(--transition);
+    }
+    .color-dot:hover { transform: scale(1.2); }
+    .color-dot.active { border-color: #333; }
+
+    .mock-invoice {
+      border-top: 8px solid var(--primary);
+      padding: 1.5rem;
+      text-align: left;
+      border-radius: 4px;
+      background: #fff;
+      transition: border-color 0.4s ease;
     }
 
-    .tagline {
-      font-size: 1.25rem;
-      color: var(--text-muted);
-      max-width: 700px;
-      margin: 1.5rem auto 2.5rem;
-    }
-
-    /* CTA Buttons */
-    .cta-group {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 1rem 2rem;
-      border-radius: 12px;
-      font-weight: 600;
-      text-decoration: none;
-      transition: var(--transition);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-primary {
-      background: var(--primary);
-      color: white;
-      box-shadow: 0 4px 14px rgba(255, 107, 0, 0.3);
-    }
-
-    .btn-primary:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.4);
-    }
-
-    .btn-secondary {
-      background: var(--secondary);
-      color: white;
-    }
-
-    .btn-secondary:hover {
-      background: #000;
-      transform: translateY(-2px);
-    }
-
-    /* Features Section */
-    .section-title {
-      text-align: center;
-      margin-bottom: 4rem;
-    }
-
+    /* --- Feature Grid --- */
     .features-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
-      padding: 4rem 5%;
-      max-width: 1200px;
+      padding: 4rem 10%;
+      max-width: 1300px;
       margin: auto;
     }
 
     .feature-card {
       background: white;
       padding: 2.5rem;
-      border-radius: 24px;
+      border-radius: 20px;
       border: 1px solid #f0f0f0;
       transition: var(--transition);
     }
-
-    .feature-card:hover {
-      border-color: var(--primary);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    .feature-card:hover { transform: translateY(-10px); border-color: var(--primary); }
+    .icon-box { 
+      background: #fff5ed; width: 50px; height: 50px; 
+      display: flex; align-items: center; justify-content: center; 
+      border-radius: 12px; font-size: 1.5rem; margin-bottom: 1.5rem; 
     }
 
-    .feature-icon {
-      font-size: 2rem;
-      margin-bottom: 1.5rem;
-      display: block;
+    /* --- Buttons --- */
+    .btn {
+      padding: 1rem 2rem; border-radius: 12px; font-weight: 600; text-decoration: none; 
+      display: inline-block; transition: var(--transition);
     }
+    .btn-primary { background: var(--primary); color: white; box-shadow: 0 8px 20px rgba(255, 107, 0, 0.2); }
+    .btn-primary:hover { transform: scale(1.05); background: var(--primary-dark); }
 
-    .feature-card h3 {
-      margin: 0 0 1rem 0;
-      font-size: 1.4rem;
-    }
-
-    /* Testimonials */
-    .testimonials {
-      background: #1A1A1B;
-      color: white;
-      padding: 6rem 5%;
-      text-align: center;
-    }
-
-    .testimonial-card {
-      max-width: 800px;
-      margin: 0 auto;
-      font-size: 1.5rem;
-      line-height: 1.4;
-      font-weight: 400;
-      opacity: 0.9;
-    }
-
-    .author {
-      margin-top: 2rem;
-      display: block;
-      color: var(--primary);
-      font-weight: 600;
-      font-size: 1rem;
-    }
-
-    /* Footer */
-    footer {
-      padding: 4rem 5%;
-      text-align: center;
-      border-top: 1px solid #eee;
-      color: var(--text-muted);
-      font-size: 0.9rem;
-    }
-
-    /* Responsive adjustments */
+    footer { background: #1A1A1B; color: white; padding: 4rem 10% 2rem; text-align: center; }
+    
     @media (max-width: 768px) {
-      header { padding-top: 5rem; }
-      .cta-group { flex-direction: column; }
-      .btn { width: 100%; justify-content: center; }
+      nav { padding: 1rem 5%; }
+      header { padding: 4rem 5%; }
     }
   </style>
 </head>
@@ -218,60 +122,93 @@
 
   <nav>
     <a href="#" class="logo">Locas.</a>
-    <div>
-      <a href="#features" style="text-decoration:none; color:var(--text-main); font-weight:600; font-size:0.9rem;">Features</a>
-    </div>
+    <a href="https://expo.dev/artifacts/eas/nApyQ2nnXdFELZA5aMcgk9.apk" class="btn btn-primary" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Get App</a>
   </nav>
 
   <header>
-    <img src="icon.png" alt="Locas App Icon" class="app-icon">
-    <h1>Manage your business,<br>not your paperwork.</h1>
-    <p class="tagline">The all-in-one suite for small businesses to track sales, manage inventory, and send professional invoices in seconds.</p>
+    <h1>The Smartest Way to<br><span>Manage Your Store.</span></h1>
+    <p class="tagline">Handle customers, track stock, and generate beautiful invoices that match your brand perfectly—all from your phone.</p>
     
-    <div class="cta-group">
-      <a href="https://expo.dev/artifacts/eas/nApyQ2nnXdFELZA5aMcgk9.apk" class="btn btn-primary" download>
-        Download for Android
-      </a>
-      <a href="https://expo.dev/accounts/your-account/projects/locas" class="btn btn-secondary">
-        Try on iOS (Expo Go)
-      </a>
+    <div class="invoice-preview-container">
+      <p style="font-weight: 600; margin-bottom: 1rem;">✨ Customize Your Brand Identity</p>
+      <div class="color-picker">
+        <span>Invoice Theme:</span>
+        <div class="color-dot active" style="background: #FF6B00;" onclick="changeTheme('#FF6B00', this)"></div>
+        <div class="color-dot" style="background: #2563EB;" onclick="changeTheme('#2563EB', this)"></div>
+        <div class="color-dot" style="background: #059669;" onclick="changeTheme('#059669', this)"></div>
+        <div class="color-dot" style="background: #7C3AED;" onclick="changeTheme('#7C3AED', this)"></div>
+        <div class="color-dot" style="background: #DB2777;" onclick="changeTheme('#DB2777', this)"></div>
+      </div>
+      
+      <div class="mock-invoice" id="invoice">
+        <div style="display: flex; justify-content: space-between; align-items: start;">
+          <div>
+            <h2 style="margin:0">INVOICE</h2>
+            <small style="color: #666;">#INV-2026-001</small>
+          </div>
+          <div style="text-align: right;">
+            <strong id="themeText" style="color: var(--primary);">Locas App Store</strong><br>
+            <small>New York, NY</small>
+          </div>
+        </div>
+        <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid #eee;">
+        <div style="background: #fdfdfd; padding: 10px; border-radius: 8px;">
+            <div style="display:flex; justify-content: space-between;">
+                <span>Premium Subscription</span>
+                <strong>$49.00</strong>
+            </div>
+        </div>
+      </div>
     </div>
   </header>
 
-  <section id="features" class="features-grid">
+  <section class="features-grid">
     <div class="feature-card">
-      <span class="feature-icon">📊</span>
-      <h3>Business Analytics</h3>
-      <p>Real-time insights into your profit, loss, and cash flow. Never guess your numbers again.</p>
+      <div class="icon-box">👥</div>
+      <h3>Party Management</h3>
+      <p>Maintain a digital ledger for all your <b>Customers & Suppliers</b>. Track "Udhaar" (Credit), payment history, and contact details in one tap.</p>
     </div>
-    <div class="feature-card">
-      <span class="feature-icon">🧾</span>
-      <h3>Instant Invoicing</h3>
-      <p>Generate PDF invoices on the fly. Send them via WhatsApp or Email instantly.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">🔗</span>
-      <h3>Payment Links</h3>
-      <p>Integrate dynamic QR codes so your customers can pay you faster with UPI or Cards.</p>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">📦</span>
-      <h3>Inventory Control</h3>
-      <p>Keep track of your stock levels and get notified when you're running low on supplies.</p>
-    </div>
-  </section>
 
-  <section class="testimonials">
-    <div class="testimonial-card">
-      "Locas has saved me at least 5 hours a week in bookkeeping. The invoices are beautiful and my clients actually pay faster now."
-      <span class="author">— Local Store Owner</span>
+    <div class="feature-card">
+      <div class="icon-box">📦</div>
+      <h3>Smart Inventory</h3>
+      <p>Automated stock tracking. Get <b>low-stock alerts</b>, manage categories, and see exactly what products are making you the most money.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="icon-box">🎨</div>
+      <h3>Dynamic Invoicing</h3>
+      <p>Generate <b>Free Professional Invoices</b>. Change colors, add your logo, and include UPI QR codes to get paid 3x faster.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="icon-box">📱</div>
+      <h3>Mobile First</h3>
+      <p>Built for speed. Works offline and syncs instantly. Manage your entire business directly from your pocket.</p>
     </div>
   </section>
 
   <footer>
-    <p>&copy; 2026 Locas App – <a href="https://locas.store" style="color:var(--primary); text-decoration:none;">locas.store</a></p>
-    <p>Built with ❤️ by Omkar Jagtap</p>
+    <div style="margin-bottom: 2rem;">
+        <h2 style="color: var(--primary); margin-bottom: 0.5rem;">Locas.</h2>
+        <p style="opacity: 0.7;">Simplifying business for millions of retailers.</p>
+    </div>
+    <p>&copy; 2026 Locas App – <a href="https://locas.store" style="color:white; text-decoration:none;">locas.store</a></p>
+    <p style="font-size: 0.8rem; opacity: 0.5; margin-top: 1rem;">Created by Omkar Jagtap</p>
   </footer>
+
+  <script>
+    function changeTheme(color, el) {
+      // Change Invoice Border
+      document.getElementById('invoice').style.borderColor = color;
+      // Change Text Color
+      document.getElementById('themeText').style.color = color;
+      
+      // Update dots
+      document.querySelectorAll('.color-dot').forEach(dot => dot.classList.remove('active'));
+      el.classList.add('active');
+    }
+  </script>
 
 </body>
 </html>
