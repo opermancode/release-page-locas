@@ -6,8 +6,8 @@
   <title>Service Portal — Locas Help Desk</title>
   
   <link rel="icon" type="image/png" href="icon1.png">
-  
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  
   <style>
     :root {
       --now-brand: #FF6B00;
@@ -30,10 +30,10 @@
       display: flex;
       flex-direction: column;
       height: 100vh;
-      overflow: hidden; /* Keeps UI fixed and professional */
+      overflow: hidden;
     }
 
-    /* Portal Header */
+    /* Header & Nav */
     .portal-header {
       background: var(--now-header-bg);
       padding: 0.75rem 5%;
@@ -42,9 +42,7 @@
     }
     .portal-logo { display: flex; align-items: center; gap: 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; color: var(--now-brand); text-decoration: none; }
     .portal-logo img { width: 28px; height: 28px; border-radius: 4px; }
-    .user-menu { font-size: 0.8rem; color: var(--now-text-muted); }
-
-    /* Breadcrumbs */
+    
     .breadcrumb-bar {
       padding: 0.6rem 5%;
       background: #141414;
@@ -52,10 +50,9 @@
       border-bottom: 1px solid var(--now-border);
     }
     .breadcrumb-bar a { color: var(--now-text-muted); text-decoration: none; }
-    .breadcrumb-bar a:hover { color: var(--now-brand); }
     .breadcrumb-bar span { color: #555; margin: 0 8px; }
 
-    /* Dashboard Grid */
+    /* Layout Grid */
     .dashboard-grid {
       display: grid;
       grid-template-columns: 2fr 1fr;
@@ -65,7 +62,6 @@
       align-items: center;
     }
 
-    /* Service Cards */
     .service-card {
       background: var(--now-card-bg);
       border: 1px solid var(--now-border);
@@ -73,12 +69,10 @@
       padding: 1.5rem;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
-    .service-card h2, .service-card h3 { font-family: 'Syne', sans-serif; margin: 0 0 1rem 0; display: flex; align-items: center; gap: 10px; }
-    .service-card h2 { font-size: 1.3rem; }
+    .service-card h2 { font-family: 'Syne', sans-serif; font-size: 1.3rem; margin: 0 0 1rem 0; display: flex; align-items: center; gap: 10px; }
     .service-card h2 span { color: var(--now-brand); }
-    .service-card .card-subtitle { color: var(--now-text-muted); font-size: 0.8rem; margin-bottom: 1.2rem; line-height: 1.4; }
 
-    /* Form Elements */
+    /* Form Fields */
     .form-group { margin-bottom: 0.8rem; }
     label { display: block; font-size: 0.65rem; color: var(--now-text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 0.3rem; letter-spacing: 0.5px; }
     
@@ -91,57 +85,51 @@
       color: white;
       font-size: 0.85rem;
       outline: none;
-      transition: border 0.2s;
     }
-    input:focus, textarea:focus, select:focus { border-color: var(--now-brand); }
-    
-    /* Fixed white dropdown issue */
     select option { background-color: #1A1A1A; color: white; }
-    textarea { resize: none; }
+
+    /* Drag & Drop Zone */
+    .drop-zone {
+      width: 100%;
+      height: 70px;
+      padding: 10px;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; font-size: 0.75rem; cursor: pointer;
+      color: var(--now-text-muted);
+      border: 2px dashed var(--now-border);
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+    .drop-zone--over { border-color: var(--now-brand); background: rgba(255,107,0,0.05); }
+    .drop-zone__input { display: none; }
+    .drop-zone__thumb {
+      width: 100%; height: 100%; border-radius: 6px;
+      background-size: contain; background-repeat: no-repeat; background-position: center;
+    }
 
     .btn-submit {
-      width: 100%;
-      padding: 0.85rem;
-      background: var(--now-brand);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      transition: transform 0.2s, opacity 0.2s;
-      margin-top: 0.4rem;
+      width: 100%; padding: 0.85rem; background: var(--now-brand); color: white;
+      border: none; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 0.5rem;
     }
-    .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
-    .btn-submit:disabled { background: #333; cursor: not-allowed; }
 
-    /* Right Widgets */
+    /* Widgets & Footer */
     .widget-stack { display: flex; flex-direction: column; gap: 1rem; }
     .widget-card { padding: 1rem; font-size: 0.75rem; color: var(--now-text-muted); }
-    .widget-card h3 { font-size: 1rem; color: var(--now-text-primary); }
-    .widget-card ul { list-style: none; padding: 0; margin: 0.5rem 0 0 0; }
-    .widget-card ul li { margin-bottom: 0.4rem; display: flex; gap: 8px; }
-
-    /* Footer Navbar */
+    
     .portal-footer {
       background: var(--now-footer-bg);
       border-top: 1px solid var(--now-border);
       padding: 0.8rem 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.7rem;
-      color: var(--now-text-muted);
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 0.7rem; color: var(--now-text-muted);
     }
-    .footer-status { display: flex; align-items: center; gap: 8px; }
-    .status-indicator { width: 8px; height: 8px; background: #4dff88; border-radius: 50%; box-shadow: 0 0 8px #4dff88; }
-    
+    .status-indicator { width: 8px; height: 8px; background: #4dff88; border-radius: 50%; box-shadow: 0 0 8px #4dff88; margin-right: 8px; display: inline-block; }
+
     #status { margin-top: 0.5rem; text-align: center; font-size: 0.75rem; display: none; }
 
     @media (max-width: 900px) {
       .dashboard-grid { grid-template-columns: 1fr; }
       .widget-stack { display: none; }
-      .portal-footer { flex-direction: column; gap: 8px; }
     }
   </style>
 </head>
@@ -152,18 +140,16 @@
       <img src="icon1.png" alt="Logo">
       Locas Support
     </a>
-    <div class="user-menu">Service Portal v2.1</div>
+    <div style="font-size: 0.8rem; color: var(--now-text-muted);">Service Portal v2.2</div>
   </header>
 
   <div class="breadcrumb-bar">
-    <a href="index.html">Home</a> <span>&rsaquo;</span> <a href="#">Service Catalog</a> <span>&rsaquo;</span> Open an Incident
+    <a href="index.html">Home</a> <span>&rsaquo;</span> Open an Incident
   </div>
 
   <main class="dashboard-grid">
-    <div class="service-card incident-card">
+    <div class="service-card">
       <h2><span>🎫</span> Create an Incident</h2>
-      <p class="card-subtitle">Report software issues here. Registered email is used for verification.</p>
-
       <form id="supportForm">
         <div class="form-group">
           <label>Registered Email</label>
@@ -171,33 +157,35 @@
         </div>
 
         <div style="display: flex; gap: 10px;">
-            <div class="form-group" style="flex: 1;">
-                <label>Category</label>
-                <select id="category">
-                    <option value="Technical Bug">Technical Bug</option>
-                    <option value="Billing/Invoice">Billing / Invoice Help</option>
-                    <option value="Offline Sync">Offline Sync Issue</option>
-                    <option value="Feature Request">Feature Request</option>
-                </select>
-            </div>
-            <div class="form-group" style="flex: 1;">
-                <label>Priority</label>
-                <select id="priority">
-                    <option value="Normal">Normal</option>
-                    <option value="Moderate">Moderate</option>
-                    <option value="Urgent">Urgent 🔥</option>
-                </select>
-            </div>
+          <div class="form-group" style="flex: 1;">
+            <label>Category</label>
+            <select id="category">
+              <option value="Technical Bug">Technical Bug</option>
+              <option value="Billing/Invoice">Billing / Invoice</option>
+              <option value="Feature Request">Feature Request</option>
+            </select>
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label>Priority</label>
+            <select id="priority">
+              <option value="Normal">Normal</option>
+              <option value="Moderate">Moderate</option>
+              <option value="Urgent">Urgent 🔥</option>
+            </select>
+          </div>
         </div>
 
         <div class="form-group">
-          <label>Attach Screenshot (Optional)</label>
-          <input type="file" id="screenshot" accept="image/*" style="padding: 0.5rem; font-size: 0.75rem;">
+          <label>Screenshot (Drag & Drop)</label>
+          <div id="drop-zone" class="drop-zone">
+            <span class="drop-zone__prompt">Click or Drop Image</span>
+            <input type="file" id="screenshot" class="drop-zone__input" accept="image/*">
+          </div>
         </div>
 
         <div class="form-group">
-          <label>Short Description</label>
-          <textarea id="message" rows="3" required placeholder="e.g. Printer not detecting after update..."></textarea>
+          <label>Description</label>
+          <textarea id="message" rows="2" required placeholder="Describe the issue..."></textarea>
         </div>
 
         <button type="submit" class="btn-submit" id="submitBtn">Submit Incident →</button>
@@ -206,94 +194,102 @@
     </div>
 
     <div class="widget-stack">
-        <div class="service-card widget-card">
-            <h3><span>ℹ️</span> Support Hours</h3>
-            <p>Mon - Fri, 9:00 AM - 6:00 PM IST.</p>
-            <p>Avg. Response: 4 business hours.</p>
-        </div>
-        <div class="service-card widget-card">
-            <h3><span>📋</span> Incident Policy</h3>
-            <ul>
-                <li>✅ <strong>Details:</strong> Provide exact error messages.</li>
-                <li>✅ <strong>Urgent:</strong> Use only if billing is blocked.</li>
-            </ul>
-        </div>
+      <div class="service-card widget-card">
+        <h3>ℹ️ Support Info</h3>
+        <p>Response time: ~4 hours.</p>
+        <p>Status: <strong>Active</strong></p>
+      </div>
+      <div class="service-card widget-card">
+        <h3>📋 Policy</h3>
+        <p>Please include screenshots for UI or printing errors.</p>
+      </div>
     </div>
   </main>
 
   <footer class="portal-footer">
-    <div class="footer-status">
-      <div class="status-indicator"></div>
-      All Systems Operational
-    </div>
-    <div class="copyright-text">
-      &copy; 2026 Locasdot, Locas. All Rights Reserved.
-    </div>
+    <div><span class="status-indicator"></span>All Systems Operational</div>
+    <div>&copy; 2026 Locasdot, Locas. All Rights Reserved.</div>
   </footer>
 
-<script>
-  // Your Webhook URL
-  const webhookURL = "https://discord.com/api/webhooks/1488609903139356744/YO38r_l9_Y9Asr0FpfulvMV5VybWs7YgqOOHUazdL0wPAmki9ORv5z2m1IPO4QsKn31l";
+  <script>
+    const webhookURL = "https://discord.com/api/webhooks/1488609903139356744/YO38r_l9_Y9Asr0FpfulvMV5VybWs7YgqOOHUazAmki9ORv5z2m1IPO4QsKn31l";
 
-  document.getElementById('supportForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = document.getElementById('submitBtn');
-    const status = document.getElementById('status');
-    const fileInput = document.getElementById('screenshot');
+    // Drag and Drop Logic
+    const dropZone = document.getElementById("drop-zone");
+    const fileInput = document.getElementById("screenshot");
 
-    btn.disabled = true;
-    btn.innerText = "Uploading Incident...";
+    dropZone.addEventListener("click", () => fileInput.click());
+    
+    fileInput.addEventListener("change", () => {
+      if (fileInput.files.length) updateThumbnail(fileInput.files[0]);
+    });
 
-    // Prepare Embed JSON
-    const embedData = {
-      username: "Locas Incident Bot",
-      embeds: [{
-        title: "🎫 New Support Ticket: Open an Incident",
-        color: 16739072, // Locas Orange
-        image: { url: "attachment://screenshot.png" }, // Shows the file inside the card
-        fields: [
-          { name: "📧 Software Email", value: document.getElementById('email').value },
-          { name: "📂 Incident Category", value: document.getElementById('category').value, inline: true },
-          { name: "⚠️ Priority Level", value: document.getElementById('priority').value, inline: true },
-          { name: "💬 Issue Description", value: "```" + document.getElementById('message').value + "```" }
-        ],
-        footer: { text: "Locas Cloud Ticketing System v2.1" },
-        timestamp: new Date()
-      }]
-    };
+    dropZone.addEventListener("dragover", (e) => { e.preventDefault(); dropZone.classList.add("drop-zone--over"); });
+    ["dragleave", "dragend"].forEach(type => dropZone.addEventListener(type, () => dropZone.classList.remove("drop-zone--over")));
 
-    // Use FormData for multi-part (File + JSON)
-    const formData = new FormData();
-    formData.append('payload_json', JSON.stringify(embedData));
+    dropZone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      if (e.dataTransfer.files.length) {
+        fileInput.files = e.dataTransfer.files;
+        updateThumbnail(e.dataTransfer.files[0]);
+      }
+      dropZone.classList.remove("drop-zone--over");
+    });
 
-    // Append file if exists
-    if (fileInput.files.length > 0) {
-      formData.append('file', fileInput.files[0], 'screenshot.png');
+    function updateThumbnail(file) {
+      let prompt = dropZone.querySelector(".drop-zone__prompt");
+      if (prompt) prompt.remove();
+      let thumb = dropZone.querySelector(".drop-zone__thumb") || document.createElement("div");
+      thumb.classList.add("drop-zone__thumb");
+      dropZone.appendChild(thumb);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => thumb.style.backgroundImage = `url('${reader.result}')`;
     }
 
-    try {
-      const response = await fetch(webhookURL, {
-        method: 'POST',
-        // Headers are set automatically by the browser for FormData
-        body: formData
-      });
+    // Submission Logic
+    document.getElementById('supportForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      const status = document.getElementById('status');
 
-      if (response.ok) {
-        status.style.display = "block";
-        status.style.color = "#4dff88";
-        status.innerText = "Incident & Screenshot submitted successfully!";
-        document.getElementById('supportForm').reset();
-      } else { throw new Error(); }
-    } catch (err) {
-      status.style.display = "block";
-      status.style.color = "#ff4d4d";
-      status.innerText = "Error. Please check file size or connection.";
-    } finally {
-      btn.disabled = false;
-      btn.innerText = "Submit Incident →";
-    }
-  });
-</script>
+      btn.disabled = true;
+      btn.innerText = "Processing...";
 
+      const embedData = {
+        embeds: [{
+          title: "🎫 New Support Incident",
+          color: 16739072,
+          image: { url: "attachment://screenshot.png" },
+          fields: [
+            { name: "📧 Email", value: document.getElementById('email').value },
+            { name: "📂 Category", value: document.getElementById('category').value, inline: true },
+            { name: "⚠️ Priority", value: document.getElementById('priority').value, inline: true },
+            { name: "💬 Message", value: "```" + document.getElementById('message').value + "```" }
+          ],
+          footer: { text: "Locas Cloud Ticketing" },
+          timestamp: new Date()
+        }]
+      };
+
+      const formData = new FormData();
+      formData.append('payload_json', JSON.stringify(embedData));
+      if (fileInput.files.length) formData.append('file', fileInput.files[0], 'screenshot.png');
+
+      try {
+        const res = await fetch(webhookURL, { method: 'POST', body: formData });
+        if (res.ok) {
+          status.style.display = "block"; status.style.color = "#4dff88"; status.innerText = "Success! Incident created.";
+          document.getElementById('supportForm').reset();
+          if (dropZone.querySelector(".drop-zone__thumb")) dropZone.querySelector(".drop-zone__thumb").remove();
+          dropZone.innerHTML = '<span class="drop-zone__prompt">Click or Drop Image</span>';
+        } else { throw new Error(); }
+      } catch {
+        status.style.display = "block"; status.style.color = "#ff4d4d"; status.innerText = "Error submitting incident.";
+      } finally {
+        btn.disabled = false; btn.innerText = "Submit Incident →";
+      }
+    });
+  </script>
 </body>
 </html>
