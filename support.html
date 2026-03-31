@@ -10,14 +10,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* ServiceNow Inspired Palette adapted for Locas */
-      --now-brand: #FF6B00;         /* Locas Brand Orange */
-      --now-bg: #0F0F0F;            /* Main background */
-      --now-card-bg: #1A1A1A;       /* Service Card background */
+      --now-brand: #FF6B00;
+      --now-bg: #0F0F0F;
+      --now-card-bg: #1A1A1A;
       --now-text-primary: #F5F5F5;
       --now-text-muted: #A0A0A0;
       --now-border: rgba(255,255,255,0.06);
       --now-header-bg: #000000;
+      --now-footer-bg: #0A0A0A;
     }
 
     * { box-sizing: border-box; }
@@ -30,7 +30,7 @@
       display: flex;
       flex-direction: column;
       height: 100vh;
-      overflow: hidden; /* No scrolling */
+      overflow: hidden;
     }
 
     /* Portal Header */
@@ -55,17 +55,17 @@
     .breadcrumb-bar a:hover { color: var(--now-brand); }
     .breadcrumb-bar span { color: #555; margin: 0 8px; }
 
-    /* Dashboard Grid (ServiceNow Layout) */
+    /* Dashboard Grid */
     .dashboard-grid {
       display: grid;
-      grid-template-columns: 2fr 1fr; /* 2 parts form, 1 part widget */
+      grid-template-columns: 2fr 1fr;
       gap: 1.5rem;
-      padding: 2rem 5%;
-      flex: 1; /* Fills remaining height */
-      align-items: center; /* Vertically centers the grid in the viewport */
+      padding: 1.5rem 5%;
+      flex: 1;
+      align-items: center;
     }
 
-    /* Standard ServiceNow Service Card */
+    /* Service Cards */
     .service-card {
       background: var(--now-card-bg);
       border: 1px solid var(--now-border);
@@ -73,24 +73,24 @@
       padding: 1.5rem;
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
-    .service-card h2 { font-family: 'Syne', sans-serif; font-size: 1.3rem; margin: 0 0 1.2rem 0; display: flex; align-items: center; gap: 10px; }
-    .service-card h2 span { color: var(--now-brand); font-size: 1.1em; }
-    .service-card .card-subtitle { color: var(--now-text-muted); font-size: 0.8rem; margin-bottom: 1.5rem; line-height: 1.4; }
+    .service-card h2, .service-card h3 { font-family: 'Syne', sans-serif; margin: 0 0 1rem 0; display: flex; align-items: center; gap: 10px; }
+    .service-card h2 { font-size: 1.3rem; }
+    .service-card h2 span { color: var(--now-brand); }
+    .service-card .card-subtitle { color: var(--now-text-muted); font-size: 0.8rem; margin-bottom: 1.2rem; line-height: 1.4; }
 
-    /* Ticketing Form Styling */
-    .form-group { margin-bottom: 1rem; }
-    label { display: block; font-size: 0.7rem; color: var(--now-text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 0.4rem; letter-spacing: 0.5px; }
+    /* Form Elements */
+    .form-group { margin-bottom: 0.8rem; }
+    label { display: block; font-size: 0.65rem; color: var(--now-text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 0.3rem; letter-spacing: 0.5px; }
     
     input, textarea, select {
       width: 100%;
-      padding: 0.75rem;
+      padding: 0.7rem;
       background: rgba(255,255,255,0.04);
       border: 1px solid var(--now-border);
       border-radius: 8px;
       color: white;
       font-size: 0.85rem;
       outline: none;
-      transition: all 0.2s;
     }
     input:focus { border-color: var(--now-brand); }
     select option { background-color: #1A1A1A; color: white; }
@@ -98,33 +98,47 @@
 
     .btn-submit {
       width: 100%;
-      padding: 0.9rem;
+      padding: 0.85rem;
       background: var(--now-brand);
       color: white;
       border: none;
       border-radius: 8px;
       font-weight: 700;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       cursor: pointer;
       transition: 0.3s;
-      margin-top: 0.5rem;
+      margin-top: 0.4rem;
     }
     .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
 
-    /* Widgets Section (Right side) */
+    /* Widgets */
     .widget-stack { display: flex; flex-direction: column; gap: 1rem; }
-    .widget-card { padding: 1rem; font-size: 0.8rem; line-height: 1.5; color: var(--now-text-muted); }
-    .widget-card strong { color: var(--now-text-primary); }
-    .widget-card p { margin: 0 0 0.5rem 0; }
+    .widget-card { padding: 1rem; font-size: 0.75rem; color: var(--now-text-muted); }
+    .widget-card h3 { font-size: 1rem; color: var(--now-text-primary); }
     .widget-card ul { list-style: none; padding: 0; margin: 0.5rem 0 0 0; }
     .widget-card ul li { margin-bottom: 0.4rem; display: flex; gap: 8px; }
 
-    /* Status display */
-    #status { margin-top: 0.8rem; text-align: center; font-size: 0.8rem; display: none; }
+    /* NEW Footer Navbar */
+    .portal-footer {
+      background: var(--now-footer-bg);
+      border-top: 1px solid var(--now-border);
+      padding: 0.8rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.7rem;
+      color: var(--now-text-muted);
+    }
+    .footer-status { display: flex; align-items: center; gap: 8px; }
+    .status-indicator { width: 8px; height: 8px; background: #4dff88; border-radius: 50%; box-shadow: 0 0 8px #4dff88; }
+    .copyright-text { letter-spacing: 0.5px; }
+
+    #status { margin-top: 0.5rem; text-align: center; font-size: 0.75rem; display: none; }
 
     @media (max-width: 900px) {
       .dashboard-grid { grid-template-columns: 1fr; }
       .widget-stack { display: none; }
+      .portal-footer { flex-direction: column; gap: 10px; text-align: center; }
     }
   </style>
 </head>
@@ -135,7 +149,7 @@
       <img src="icon1.png" alt="Logo">
       Locas Support
     </a>
-    <div class="user-menu">Service Portal</div>
+    <div class="user-menu">Service Portal v2.0</div>
   </header>
 
   <div class="breadcrumb-bar">
@@ -143,14 +157,13 @@
   </div>
 
   <main class="dashboard-grid">
-    
     <div class="service-card incident-card">
       <h2><span>🎫</span> Create an Incident</h2>
-      <p class="card-subtitle">Facing an issue with your Locas software? Report it here. Your registered email is used for verification.</p>
+      <p class="card-subtitle">Facing an issue with Locas? Report it here for verification.</p>
 
       <form id="supportForm">
         <div class="form-group">
-          <label>Registered Email (Required)</label>
+          <label>Registered Email</label>
           <input type="email" id="email" required placeholder="name@business.com">
         </div>
 
@@ -169,14 +182,14 @@
                 <select id="priority">
                     <option value="Normal">Normal</option>
                     <option value="Moderate">Moderate</option>
-                    <option value="Urgent">Urgent</option>
+                    <option value="Urgent">Urgent 🔥</option>
                 </select>
             </div>
         </div>
 
         <div class="form-group">
-          <label>Short Description of Issue</label>
-          <textarea id="message" rows="3" required placeholder="e.g. Printer not detecting, GST mismatch..."></textarea>
+          <label>Short Description</label>
+          <textarea id="message" rows="3" required placeholder="e.g. GST mismatch on print..."></textarea>
         </div>
 
         <button type="submit" class="btn-submit" id="submitBtn">Submit Incident →</button>
@@ -187,24 +200,30 @@
     <div class="widget-stack">
         <div class="service-card widget-card">
             <h3><span>ℹ️</span> Support Info</h3>
-            <p>Our help desk operates Monday - Friday, 9:00 AM to 6:00 PM IST.</p>
-            <p>High-priority incidents are usually addressed within 4 business hours.</p>
+            <p>Mon - Fri, 9:00 AM - 6:00 PM IST.</p>
+            <p>Avg. Response: 4 business hours.</p>
         </div>
         <div class="service-card widget-card">
-            <h3><span>📋</span> Incident Guidelines</h3>
-            <p>For a faster resolution, please ensure:</p>
+            <h3><span>📋</span> Quick Guidelines</h3>
             <ul>
-                <li>✅ <strong>Accurate Email:</strong> Use the email associated with your license.</li>
-                <li>✅ <strong>Specific details:</strong> Tell us what action failed.</li>
-                <li>✅ <strong>Priority:</strong> Mark 'Urgent' only if billing is completely stopped.</li>
+                <li>✅ <strong>Email:</strong> Match your license email.</li>
+                <li>✅ <strong>Urgent:</strong> Use for billing-stop only.</li>
             </ul>
         </div>
     </div>
-
   </main>
 
+  <footer class="portal-footer">
+    <div class="footer-status">
+      <div class="status-indicator"></div>
+      All Systems Operational
+    </div>
+    <div class="copyright-text">
+      &copy; 2026 Locasdot, Locas. All Rights Reserved.
+    </div>
+  </footer>
+
 <script>
-  // Replace this placeholder with your actual Discord Webhook URL for the logic to work.
   const webhookURL = "https://discord.com/api/webhooks/1488609903139356744/YO38r_l9_Y9Asr0FpfulvMV5VybWs7YgqOOHUazdL0wPAmki9ORv5z2m1IPO4QsKn31l";
 
   document.getElementById('supportForm').addEventListener('submit', async (e) => {
@@ -213,13 +232,13 @@
     const status = document.getElementById('status');
 
     btn.disabled = true;
-    btn.innerText = "Processing Incident...";
+    btn.innerText = "Processing...";
 
     const data = {
       username: "Locas Incident Bot",
       embeds: [{
         title: "🎫 New Support Ticket: Open an Incident",
-        color: 16739072, // Locas Orange
+        color: 16739072,
         fields: [
           { name: "📧 Software Email", value: document.getElementById('email').value },
           { name: "📂 Incident Category", value: document.getElementById('category').value, inline: true },
@@ -241,13 +260,13 @@
       if (response.ok) {
         status.style.display = "block";
         status.style.color = "#4dff88";
-        status.innerText = "Incident created successfully! We will contact you shortly.";
+        status.innerText = "Incident created successfully!";
         document.getElementById('supportForm').reset();
       } else { throw new Error(); }
     } catch (err) {
       status.style.display = "block";
       status.style.color = "#ff4d4d";
-      status.innerText = "Internal error. Failed to create incident.";
+      status.innerText = "Error. Failed to create incident.";
     } finally {
       btn.disabled = false;
       btn.innerText = "Submit Incident →";
