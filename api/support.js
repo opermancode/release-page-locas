@@ -1,21 +1,46 @@
+// Disable Vercel's automatic body parsing to allow large images/files
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
 export default async function handler(req, res) {
-  // This value is pulled from your Provider's Dashboard (Vercel/Netlify Secrets)
-  // It NEVER reaches the user's browser.
-  const DISCORD_WEBHOOK = process.env.DISCORD_WEBHOOK_URL;
+  const DISCORD_URL = process.env.DISCORD_WEBHOOK_URL;
+
+  // 1. Check if the Secret is actually there
+  if (!DISCORD_URL) {
+    console.error("CRITICAL: DISCORD_WEBHOOK_URL is not defined in Vercel secrets.");
+    return res.status(500).json({ error: "Server configuration error (Secret missing)." });
+  }
 
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    // Forward the request to Discord
-    const response = await fetch(DISCORD_WEBHOOK, {
+    // 2. Forward the request to Discord
+    // We use 'req' directly as the body. 
+    // In Vercel, 'req' is a readable stream.
+    const response = await fetch(DISCORD_URL, {
       method: 'POST',
-      body: req.body, // Pass the FormData directly through
+      headers: {
+        'Content-Type': req.headers['content-type'], // This passes the 'boundary' for the image
+      },
+      body: req,
+      // Duplex is required when body is a stream in Node.js fetch
+      duplex: 'half', 
     });
 
-    return res.status(response.status).json({ success: response.ok });
+    if (response.ok) {
+      return res.status(200).json({ success: true });
+    } else {
+      const errorData = await response.text();
+      console.error("Discord rejected the request:", errorData);
+      return res.status(response.status).json({ error: "Discord rejected the message." });
+    }
   } catch (error) {
-    return res.status(500).json({ error: 'Failed to proxy request' });
+    console.error("API Error:", error.message);
+    return res.status(500).json({ error: "Internal Server Error" });
   }
 }
