@@ -438,9 +438,6 @@
     .form-success h4 { font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; font-family: 'Syne', sans-serif; }
     .form-success p { color: var(--muted); font-size: 0.9rem; }
 
-    /* ── Ticket Success Overlay ── */
-    #ticketSuccess h4 { color: var(--success); }
-
     footer {
       border-top: 1px solid var(--border);
       padding: 3rem 6%;
@@ -465,18 +462,6 @@
     }
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
-    /* Floating Support Button */
-    .support-float {
-      position: fixed; bottom: 2rem; right: 2rem;
-      background: var(--brand); width: 50px; height: 50px;
-      border-radius: 50%; display: flex; align-items: center;
-      justify-content: center; font-size: 1.5rem;
-      box-shadow: 0 10px 30px rgba(255,107,0,0.4);
-      z-index: 99; text-decoration: none;
-      transition: transform 0.2s;
-    }
-    .support-float:hover { transform: scale(1.1); }
-
     @media (max-width: 768px) {
       nav { padding: 1rem 5%; }
       .nav-links { display: none; }
@@ -497,12 +482,12 @@
     <div class="nav-links">
       <a href="#features">Features</a>
       <a href="#how">How it works</a>
-      <a href="#support" style="color: var(--brand); font-weight: 700;">Support</a>
+      <a href="support.html" style="color: var(--brand); font-weight: 700;">Support</a>
       <a href="#contact">Contact</a>
     </div>
     <div style="display:flex;gap:0.5rem;align-items:center;">
       <a href="https://expo.dev/artifacts/eas/3uP3GTytgc68yNFKwZdepQ.apk" class="btn-nav">📱 Android</a>
-      <a href="https://github.com/opermancode/locas/releases/download/desktop%2Fv1.8.16/Locas.Setup.1.8.16.exe" class="btn-nav" style="background:#374151;">🖥️ Windows</a>
+      <a href="https://github.com/opermancode/locas/releases/download/desktop%2Fv1.8.14/Locas.Setup.1.8.14.exe" class="btn-nav" style="background:#374151;">🖥️ Windows</a>
     </div>
   </nav>
 
@@ -658,51 +643,6 @@
     </div>
   </section>
 
-  <section id="support" class="reveal" style="padding: 5rem 6%; background: var(--dark2); border-top: 1px solid var(--border);">
-    <div style="max-width: 700px; margin: 0 auto; text-align: center;">
-      <div class="section-label">Technical Help</div>
-      <h2 class="section-title">Open a Ticket</h2>
-      <p class="section-sub">Facing an issue or need a feature? Our Discord-powered ticketing system ensures you get help fast.</p>
-      
-      <div class="contact-form" style="text-align: left;">
-        <form id="ticketForm">
-          <div class="form-row">
-            <div class="form-group">
-              <label>Full Name</label>
-              <input type="text" name="name" placeholder="Business Owner Name" required>
-            </div>
-            <div class="form-group">
-              <label>Priority</label>
-              <select name="priority">
-                <option value="Normal">Normal</option>
-                <option value="High">Urgent 🔥</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" name="email" placeholder="support@yourbusiness.com" required>
-          </div>
-          <div class="form-group">
-            <label>Subject</label>
-            <input type="text" name="subject" placeholder="e.g. Printer not connecting" required>
-          </div>
-          <div class="form-group">
-            <label>Detailed Description</label>
-            <textarea name="description" placeholder="Describe the issue you're facing..."></textarea>
-          </div>
-          <button type="submit" class="btn-submit" id="tktBtn">Generate Support Ticket →</button>
-        </form>
-
-        <div class="form-success" id="ticketSuccess">
-          <div class="check">🎫</div>
-          <h4>Ticket Created!</h4>
-          <p>Your Ticket ID is <strong id="tktIdDisplay" style="color:var(--brand);">#0000</strong>. Our team has been notified on Discord.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section id="contact" style="padding: 2rem 0;">
     <div class="contact-section">
       <div class="contact-info reveal">
@@ -765,14 +705,12 @@
     </div>
   </section>
 
-  <a href="#support" class="support-float">💬</a>
-
   <footer>
     <div class="footer-logo">Locas.</div>
     <div class="footer-links">
       <a href="#features">Features</a>
       <a href="#how">How it works</a>
-      <a href="#support">Support</a>
+      <a href="support.html">Support</a>
       <a href="#contact">Contact</a>
       <a href="https://appdistribution.firebase.dev/i/aa46bb1c4e9a8dec">Android</a>
     </div>
@@ -830,43 +768,6 @@
         demoBtn.disabled = false;
         demoBtn.textContent = 'Send Request →';
         alert('Network error. Please try again.');
-      }
-    });
-
-    // Support Ticket Submission (Vercel API)
-    const ticketForm = document.getElementById('ticketForm');
-    const ticketBtn = document.getElementById('tktBtn');
-    const ticketSuccess = document.getElementById('ticketSuccess');
-    const tktIdDisplay = document.getElementById('tktIdDisplay');
-
-    ticketForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      ticketBtn.disabled = true;
-      ticketBtn.textContent = 'Generating Ticket...';
-
-      const formData = Object.fromEntries(new FormData(ticketForm));
-
-      try {
-        const res = await fetch('/api/ticket', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData)
-        });
-
-        const data = await res.json();
-        if (data.success) {
-          ticketForm.style.display = 'none';
-          ticketSuccess.style.display = 'block';
-          tktIdDisplay.textContent = `#${data.ticketId}`;
-        } else {
-          ticketBtn.disabled = false;
-          ticketBtn.textContent = 'Generate Support Ticket →';
-          alert('Error sending ticket. Please try again later.');
-        }
-      } catch (err) {
-        ticketBtn.disabled = false;
-        ticketBtn.textContent = 'Generate Support Ticket →';
-        alert('Network error. Could not reach server.');
       }
     });
   </script>
