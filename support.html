@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Support — Locas</title>
+  <title>Support — Locas Smart Billing</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -13,6 +13,7 @@
       --border: rgba(255,255,255,0.08);
       --text: #F5F5F5;
       --muted: #888;
+      --success: #4dff88;
     }
 
     body {
@@ -20,59 +21,76 @@
       background: var(--dark);
       color: var(--text);
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       margin: 0;
+      padding: 20px;
     }
 
     .support-container {
       width: 100%;
-      max-width: 500px;
-      padding: 2rem;
+      max-width: 550px;
+      padding: 2.5rem;
       background: var(--card);
       border: 1px solid var(--border);
-      border-radius: 20px;
-      margin: 1rem;
+      border-radius: 24px;
+      backdrop-filter: blur(10px);
     }
 
-    h1 { font-family: 'Syne', sans-serif; font-size: 2rem; margin-bottom: 0.5rem; }
-    p { color: var(--muted); margin-bottom: 2rem; font-size: 0.9rem; }
+    h1 { font-family: 'Syne', sans-serif; font-size: 2.2rem; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+    .subtitle { color: var(--muted); margin-bottom: 2rem; font-size: 0.95rem; line-height: 1.5; }
 
-    .form-group { margin-bottom: 1.2rem; }
-    label { display: block; font-size: 0.75rem; color: var(--muted); text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 1px; }
+    .form-group { margin-bottom: 1.5rem; }
+    label { display: block; font-size: 0.7rem; color: var(--brand); text-transform: uppercase; margin-bottom: 0.6rem; letter-spacing: 1.5px; font-weight: 600; }
     
     input, textarea, select {
       width: 100%;
-      padding: 0.8rem;
-      background: rgba(255,255,255,0.05);
+      padding: 0.9rem;
+      background: rgba(255,255,255,0.03);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 12px;
       color: white;
+      font-family: inherit;
+      font-size: 0.9rem;
       outline: none;
+      transition: all 0.2s;
     }
 
-    input:focus, textarea:focus { border-color: var(--brand); }
+    input:focus, textarea:focus, select:focus { 
+      border-color: var(--brand); 
+      background: rgba(255,255,255,0.06);
+    }
+
+    .info-text { font-size: 0.75rem; color: var(--muted); margin-top: 0.4rem; display: block; }
 
     .btn-send {
       width: 100%;
-      padding: 1rem;
+      padding: 1.1rem;
       background: var(--brand);
       color: white;
       border: none;
-      border-radius: 10px;
-      font-weight: 600;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1rem;
       cursor: pointer;
-      transition: 0.2s;
+      transition: all 0.3s;
+      margin-top: 1rem;
     }
 
-    .btn-send:hover { opacity: 0.9; transform: translateY(-1px); }
-    .btn-send:disabled { background: #333; cursor: not-allowed; }
+    .btn-send:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(255,107,0,0.2); }
+    .btn-send:disabled { background: #333; cursor: not-allowed; transform: none; }
+
+    .back-link { margin-top: 2rem; color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: 0.2s; }
+    .back-link:hover { color: var(--text); }
 
     #status {
-      margin-top: 1rem;
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border-radius: 10px;
       text-align: center;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       display: none;
     }
   </style>
@@ -80,37 +98,57 @@
 <body>
 
 <div class="support-container">
-  <h1>Support Ticket</h1>
-  <p>Submit your issue and our team will get back to you.</p>
+  <h1>Support Center</h1>
+  <p class="subtitle">Have a question or technical issue? Fill out the form below and we'll reach out to your registered email.</p>
 
   <form id="supportForm">
     <div class="form-group">
       <label>Full Name</label>
-      <input type="text" id="name" required placeholder="Enter your name">
+      <input type="text" id="name" required placeholder="Owner or Manager Name">
     </div>
+
     <div class="form-group">
-      <label>Email</label>
-      <input type="email" id="email" required placeholder="email@example.com">
+      <label>Software Registered Email</label>
+      <input type="email" id="email" required placeholder="email@yourbusiness.com">
+      <span class="info-text">Please enter the email address used to activate Locas.</span>
     </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+        <div class="form-group">
+            <label>Support Category</label>
+            <select id="category">
+                <option value="Technical Issue">Technical Issue</option>
+                <option value="Billing/GST">Billing/GST Help</option>
+                <option value="Inventory">Inventory Sync</option>
+                <option value="Feature Request">Feature Request</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Priority</label>
+            <select id="priority">
+                <option value="Normal">Normal</option>
+                <option value="High">Urgent 🔥</option>
+            </select>
+        </div>
+    </div>
+
     <div class="form-group">
-        <label>Priority</label>
-        <select id="priority">
-            <option value="Normal">Normal</option>
-            <option value="Urgent">Urgent 🔥</option>
-        </select>
+      <label>Message / Description</label>
+      <textarea id="message" rows="4" required placeholder="Tell us exactly what happened..."></textarea>
     </div>
-    <div class="form-group">
-      <label>Message</label>
-      <textarea id="message" rows="4" required placeholder="Describe your issue..."></textarea>
-    </div>
-    <button type="submit" class="btn-send" id="submitBtn">Send Ticket</button>
+
+    <button type="submit" class="btn-send" id="submitBtn">Submit Ticket</button>
   </form>
 
   <div id="status"></div>
 </div>
 
+<a href="index.html" class="back-link">← Back to Home</a>
+
 <script>
-  const webhookURL = "https://discord.com/api/webhooks/1488609903139356744/YO38r_l9_Y9Asr0FpfulvMV5VybWs7YgqOOHUazdL0wPAmki9ORv5z2m1IPO4QsKn31l";
+  // Replace this with your actual Discord Webhook URL
+  const webhookURL = "YOUR_DISCORD_WEBHOOK_URL_HERE";
 
   document.getElementById('supportForm').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -118,19 +156,21 @@
     const status = document.getElementById('status');
 
     btn.disabled = true;
-    btn.innerText = "Sending...";
+    btn.innerText = "Processing...";
 
     const data = {
-      username: "Locas Support Bot",
+      username: "Locas Support",
       embeds: [{
-        title: "New Support Ticket",
-        color: 16739072, // Brand Orange
+        title: "🎫 New Support Ticket Received",
+        color: 16739072, // Locas Orange
         fields: [
-          { name: "User", value: document.getElementById('name').value, inline: true },
-          { name: "Email", value: document.getElementById('email').value, inline: true },
-          { name: "Priority", value: document.getElementById('priority').value },
-          { name: "Message", value: document.getElementById('message').value }
+          { name: "👤 User", value: document.getElementById('name').value, inline: true },
+          { name: "📧 Software Email", value: document.getElementById('email').value, inline: true },
+          { name: "📂 Category", value: document.getElementById('category').value, inline: true },
+          { name: "⚠️ Priority", value: document.getElementById('priority').value, inline: true },
+          { name: "💬 Message", value: "```" + document.getElementById('message').value + "```" }
         ],
+        footer: { text: "Ticket generated via locas.store Support Page" },
         timestamp: new Date()
       }]
     };
@@ -144,19 +184,21 @@
 
       if (response.ok) {
         status.style.display = "block";
+        status.style.background = "rgba(77, 255, 136, 0.1)";
         status.style.color = "#4dff88";
-        status.innerText = "Ticket sent successfully! We'll be in touch.";
+        status.innerText = "Ticket sent! Our team will contact you shortly.";
         document.getElementById('supportForm').reset();
       } else {
         throw new Error();
       }
     } catch (err) {
       status.style.display = "block";
+      status.style.background = "rgba(255, 77, 77, 0.1)";
       status.style.color = "#ff4d4d";
-      status.innerText = "Error sending ticket. Try again later.";
+      status.innerText = "Something went wrong. Please check your internet or try again.";
     } finally {
       btn.disabled = false;
-      btn.innerText = "Send Ticket";
+      btn.innerText = "Submit Ticket";
     }
   });
 </script>
