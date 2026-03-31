@@ -30,7 +30,7 @@
       display: flex;
       flex-direction: column;
       height: 100vh;
-      overflow: hidden;
+      overflow: hidden; /* Keeps UI fixed and professional */
     }
 
     /* Portal Header */
@@ -41,7 +41,7 @@
       border-bottom: 1px solid var(--now-border);
     }
     .portal-logo { display: flex; align-items: center; gap: 10px; font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; color: var(--now-brand); text-decoration: none; }
-    .portal-logo img { width: 28px; height: 28px; }
+    .portal-logo img { width: 28px; height: 28px; border-radius: 4px; }
     .user-menu { font-size: 0.8rem; color: var(--now-text-muted); }
 
     /* Breadcrumbs */
@@ -71,7 +71,7 @@
       border: 1px solid var(--now-border);
       border-radius: 12px;
       padding: 1.5rem;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     }
     .service-card h2, .service-card h3 { font-family: 'Syne', sans-serif; margin: 0 0 1rem 0; display: flex; align-items: center; gap: 10px; }
     .service-card h2 { font-size: 1.3rem; }
@@ -91,8 +91,11 @@
       color: white;
       font-size: 0.85rem;
       outline: none;
+      transition: border 0.2s;
     }
-    input:focus { border-color: var(--now-brand); }
+    input:focus, textarea:focus, select:focus { border-color: var(--now-brand); }
+    
+    /* Fixed white dropdown issue */
     select option { background-color: #1A1A1A; color: white; }
     textarea { resize: none; }
 
@@ -106,19 +109,20 @@
       font-weight: 700;
       font-size: 0.85rem;
       cursor: pointer;
-      transition: 0.3s;
+      transition: transform 0.2s, opacity 0.2s;
       margin-top: 0.4rem;
     }
     .btn-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-submit:disabled { background: #333; cursor: not-allowed; }
 
-    /* Widgets */
+    /* Right Widgets */
     .widget-stack { display: flex; flex-direction: column; gap: 1rem; }
     .widget-card { padding: 1rem; font-size: 0.75rem; color: var(--now-text-muted); }
     .widget-card h3 { font-size: 1rem; color: var(--now-text-primary); }
     .widget-card ul { list-style: none; padding: 0; margin: 0.5rem 0 0 0; }
     .widget-card ul li { margin-bottom: 0.4rem; display: flex; gap: 8px; }
 
-    /* NEW Footer Navbar */
+    /* Footer Navbar */
     .portal-footer {
       background: var(--now-footer-bg);
       border-top: 1px solid var(--now-border);
@@ -131,14 +135,13 @@
     }
     .footer-status { display: flex; align-items: center; gap: 8px; }
     .status-indicator { width: 8px; height: 8px; background: #4dff88; border-radius: 50%; box-shadow: 0 0 8px #4dff88; }
-    .copyright-text { letter-spacing: 0.5px; }
-
+    
     #status { margin-top: 0.5rem; text-align: center; font-size: 0.75rem; display: none; }
 
     @media (max-width: 900px) {
       .dashboard-grid { grid-template-columns: 1fr; }
       .widget-stack { display: none; }
-      .portal-footer { flex-direction: column; gap: 10px; text-align: center; }
+      .portal-footer { flex-direction: column; gap: 8px; }
     }
   </style>
 </head>
@@ -147,9 +150,9 @@
   <header class="portal-header">
     <a href="index.html" class="portal-logo">
       <img src="icon1.png" alt="Logo">
-      Locas. Support
+      Locas Support
     </a>
-    <div class="user-menu">Service Portal v2.0</div>
+    <div class="user-menu">Service Portal v2.1</div>
   </header>
 
   <div class="breadcrumb-bar">
@@ -159,7 +162,7 @@
   <main class="dashboard-grid">
     <div class="service-card incident-card">
       <h2><span>🎫</span> Create an Incident</h2>
-      <p class="card-subtitle">Facing an issue with Locas? Report it here for verification.</p>
+      <p class="card-subtitle">Report software issues here. Registered email is used for verification.</p>
 
       <form id="supportForm">
         <div class="form-group">
@@ -188,8 +191,13 @@
         </div>
 
         <div class="form-group">
+          <label>Attach Screenshot (Optional)</label>
+          <input type="file" id="screenshot" accept="image/*" style="padding: 0.5rem; font-size: 0.75rem;">
+        </div>
+
+        <div class="form-group">
           <label>Short Description</label>
-          <textarea id="message" rows="3" required placeholder="e.g. GST mismatch on print..."></textarea>
+          <textarea id="message" rows="3" required placeholder="e.g. Printer not detecting after update..."></textarea>
         </div>
 
         <button type="submit" class="btn-submit" id="submitBtn">Submit Incident →</button>
@@ -199,15 +207,15 @@
 
     <div class="widget-stack">
         <div class="service-card widget-card">
-            <h3><span>ℹ️</span> Support Info</h3>
+            <h3><span>ℹ️</span> Support Hours</h3>
             <p>Mon - Fri, 9:00 AM - 6:00 PM IST.</p>
             <p>Avg. Response: 4 business hours.</p>
         </div>
         <div class="service-card widget-card">
-            <h3><span>📋</span> Quick Guidelines</h3>
+            <h3><span>📋</span> Incident Policy</h3>
             <ul>
-                <li>✅ <strong>Email:</strong> Match your license email.</li>
-                <li>✅ <strong>Urgent:</strong> Use for billing-stop only.</li>
+                <li>✅ <strong>Details:</strong> Provide exact error messages.</li>
+                <li>✅ <strong>Urgent:</strong> Use only if billing is blocked.</li>
             </ul>
         </div>
     </div>
@@ -224,49 +232,62 @@
   </footer>
 
 <script>
+  // Your Webhook URL
   const webhookURL = "https://discord.com/api/webhooks/1488609903139356744/YO38r_l9_Y9Asr0FpfulvMV5VybWs7YgqOOHUazdL0wPAmki9ORv5z2m1IPO4QsKn31l";
 
   document.getElementById('supportForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
     const status = document.getElementById('status');
+    const fileInput = document.getElementById('screenshot');
 
     btn.disabled = true;
-    btn.innerText = "Processing...";
+    btn.innerText = "Uploading Incident...";
 
-    const data = {
+    // Prepare Embed JSON
+    const embedData = {
       username: "Locas Incident Bot",
       embeds: [{
         title: "🎫 New Support Ticket: Open an Incident",
-        color: 16739072,
+        color: 16739072, // Locas Orange
+        image: { url: "attachment://screenshot.png" }, // Shows the file inside the card
         fields: [
           { name: "📧 Software Email", value: document.getElementById('email').value },
           { name: "📂 Incident Category", value: document.getElementById('category').value, inline: true },
           { name: "⚠️ Priority Level", value: document.getElementById('priority').value, inline: true },
           { name: "💬 Issue Description", value: "```" + document.getElementById('message').value + "```" }
         ],
-        footer: { text: "Locas Cloud Ticketing System" },
+        footer: { text: "Locas Cloud Ticketing System v2.1" },
         timestamp: new Date()
       }]
     };
 
+    // Use FormData for multi-part (File + JSON)
+    const formData = new FormData();
+    formData.append('payload_json', JSON.stringify(embedData));
+
+    // Append file if exists
+    if (fileInput.files.length > 0) {
+      formData.append('file', fileInput.files[0], 'screenshot.png');
+    }
+
     try {
       const response = await fetch(webhookURL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        // Headers are set automatically by the browser for FormData
+        body: formData
       });
 
       if (response.ok) {
         status.style.display = "block";
         status.style.color = "#4dff88";
-        status.innerText = "Incident created successfully!";
+        status.innerText = "Incident & Screenshot submitted successfully!";
         document.getElementById('supportForm').reset();
       } else { throw new Error(); }
     } catch (err) {
       status.style.display = "block";
       status.style.color = "#ff4d4d";
-      status.innerText = "Error. Failed to create incident.";
+      status.innerText = "Error. Please check file size or connection.";
     } finally {
       btn.disabled = false;
       btn.innerText = "Submit Incident →";
