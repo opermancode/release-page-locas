@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Renew License - Locasdot</title>
+  <link rel="icon" type="image/png" href="icon.png">
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f4f7fb;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    header {
+      background: #1a73e8;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    header img {
+      height: 40px;
+      width: 40px;
+    }
+    .container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2em;
+      color: #222;
+    }
+    h2 {
+      margin-top: 0;
+      color: #444;
+    }
+    .price {
+      font-size: 2.5em;
+      color: #1a73e8;
+      margin: 20px 0;
+      font-weight: bold;
+    }
+    .features {
+      text-align: left;
+      margin: 30px auto;
+      max-width: 500px;
+    }
+    .features li {
+      margin: 10px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+    .features li::before {
+      content: "✔";
+      color: #1a73e8;
+      position: absolute;
+      left: 0;
+    }
+    .btn {
+      display: inline-block;
+      background: #1a73e8;
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 1.2em;
+      transition: background 0.3s ease;
+    }
+    .btn:hover {
+      background: #0c5fd1;
+    }
+    .note {
+      margin-top: 20px;
+      font-size: 0.95em;
+      color: #555;
+    }
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.9em;
+      color: #777;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="icon.png" alt="Locasdot Logo">
+    <h1>Locasdot License Renewal</h1>
+  </header>
+
+  <div class="container">
+    <h2>Lifetime Plan</h2>
+    <p>Enjoy uninterrupted access and secure your data with a one‑time payment.</p>
+    <div class="price">₹999</div>
+
+    <ul class="features">
+      <li>Lifetime validity — pay once, use forever</li>
+      <li>Data security and privacy guaranteed</li>
+      <li>Instant license renewal after payment</li>
+      <li>Developed and maintained by Omkar Jagtap</li>
+      <li>Protected under Locastitch proprietorship</li>
+    </ul>
+
+    <!-- Replace the link below with your actual UPI ID or Razorpay checkout -->
+    <a href="upi://pay?pa=omkarjagtap@upi&pn=Omkar%20Jagtap&am=999&cu=INR&tn=Locasdot%20Lifetime%20Renewal" class="btn">
+      Pay Now
+    </a>
+
+    <p class="note">Payments are made directly to the developer for data security and maintenance. Locasdot remains free to use.</p>
+  </div>
+
+  <footer>
+    © 2026 Locastitch. Locasdot is a project developed by Omkar Jagtap under Locastitch proprietorship.
+  </footer>
+</body>
+</html>
