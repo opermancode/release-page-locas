@@ -8,10 +8,10 @@
   <style>
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
-      background: #f4f7fb;
+      background: #121212;
       margin: 0;
       padding: 0;
-      color: #333;
+      color: #eee;
     }
     header {
       background: #1a73e8;
@@ -27,26 +27,36 @@
       height: 40px;
       width: 40px;
     }
-    .container {
-      max-width: 700px;
-      margin: 40px auto;
-      background: #fff;
-      padding: 40px;
-      border-radius: 10px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    .hero {
+      background: linear-gradient(135deg, #1a73e8, #0c5fd1);
+      padding: 60px 20px;
       text-align: center;
+      color: #fff;
     }
-    h1 {
-      margin-bottom: 10px;
-      font-size: 2em;
-      color: #222;
+    .hero h1 {
+      font-size: 2.5em;
+      margin: 0;
+    }
+    .hero p {
+      font-size: 1.2em;
+      margin-top: 10px;
+      opacity: 0.9;
+    }
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #1e1e1e;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
+      text-align: center;
     }
     h2 {
       margin-top: 0;
-      color: #444;
+      color: #ff9800;
     }
     .price {
-      font-size: 2.5em;
+      font-size: 2.8em;
       color: #1a73e8;
       margin: 20px 0;
       font-weight: bold;
@@ -54,36 +64,40 @@
     .features {
       text-align: left;
       margin: 30px auto;
-      max-width: 500px;
+      max-width: 600px;
+      color: #ddd;
     }
     .features li {
-      margin: 10px 0;
-      padding-left: 20px;
+      margin: 12px 0;
+      padding-left: 25px;
       position: relative;
+      font-size: 1.05em;
     }
     .features li::before {
       content: "✔";
-      color: #1a73e8;
+      color: #ff9800;
       position: absolute;
       left: 0;
     }
     .btn {
       display: inline-block;
-      background: #1a73e8;
-      color: #fff;
-      padding: 14px 28px;
-      border-radius: 6px;
+      background: #ff9800;
+      color: #121212;
+      padding: 16px 32px;
+      border-radius: 8px;
       text-decoration: none;
-      font-size: 1.2em;
+      font-size: 1.3em;
+      font-weight: bold;
       transition: background 0.3s ease;
+      margin-top: 20px;
     }
     .btn:hover {
-      background: #0c5fd1;
+      background: #e68900;
     }
     .note {
-      margin-top: 20px;
+      margin-top: 25px;
       font-size: 0.95em;
-      color: #555;
+      color: #aaa;
     }
     footer {
       margin-top: 40px;
@@ -91,14 +105,20 @@
       font-size: 0.9em;
       color: #777;
       padding: 20px;
+      background: #1c1c1c;
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="icon.png" alt="Locasdot Logo">
+    <img src="icon1.png" alt="Locasdot Logo">
     <h1>Locasdot License Renewal</h1>
   </header>
+
+  <section class="hero">
+    <h1>Renew Your License</h1>
+    <p>One-time payment. Lifetime access. Secure your data today.</p>
+  </section>
 
   <div class="container">
     <h2>Lifetime Plan</h2>
@@ -113,7 +133,7 @@
       <li>Protected under Locastitch proprietorship</li>
     </ul>
 
-    <!-- Replace the link below with your actual UPI ID or Razorpay checkout -->
+    <!-- Replace with your actual UPI ID or Razorpay checkout -->
     <a href="upi://pay?pa=omkarjagtap@upi&pn=Omkar%20Jagtap&am=999&cu=INR&tn=Locasdot%20Lifetime%20Renewal" class="btn">
       Pay Now
     </a>
