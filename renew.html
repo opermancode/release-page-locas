@@ -3,146 +3,545 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Renew License - Locasdot</title>
+  <title>Renew License - Locas</title>
   <link rel="icon" type="image/png" href="icon1.png">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: #121212;
-      margin: 0;
-      padding: 0;
-      color: #eee;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand: #FF6B00;
+      --brand-dim: #FF6B0018;
+      --brand-mid: #FF6B0030;
+      --dark: #0A0A0A;
+      --card: #111111;
+      --card2: #171717;
+      --border: rgba(255,255,255,0.07);
+      --border2: rgba(255,255,255,0.12);
+      --text: #F0F0F0;
+      --muted: #666;
+      --sub: #999;
     }
-    header {
-      background: #1a73e8;
-      color: #fff;
-      padding: 20px;
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Sora', sans-serif;
+      background: var(--dark);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 40px;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+    }
+
+    .nav-logo-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+
+    .nav-logo-text span { color: var(--brand); }
+
+    .nav-badge {
+      font-size: 10px;
+      font-weight: 600;
+      background: var(--brand-dim);
+      color: var(--brand);
+      border: 1px solid var(--brand-mid);
+      padding: 3px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 100px 20px 80px;
       text-align: center;
+      overflow: hidden;
+    }
+
+    /* radial glow behind hero */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(255,107,0,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--brand);
+      background: var(--brand-dim);
+      border: 1px solid var(--brand-mid);
+      padding: 6px 14px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--brand);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 72px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--brand);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--sub);
+      font-weight: 300;
+      max-width: 500px;
+      margin: 0 auto 48px;
+      line-height: 1.6;
+    }
+
+    /* ── PRICING CARD ── */
+    .pricing-wrap {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      padding: 0 20px 80px;
+    }
+
+    .pricing-card {
+      width: 100%;
+      max-width: 520px;
+      background: var(--card);
+      border: 1px solid var(--border2);
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* top orange accent line */
+    .pricing-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--brand), transparent);
+    }
+
+    .card-header {
+      padding: 36px 40px 28px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .plan-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--brand);
+      margin-bottom: 10px;
+    }
+
+    .plan-name {
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+
+    .plan-desc {
+      font-size: 14px;
+      color: var(--sub);
+      line-height: 1.5;
+    }
+
+    .price-block {
+      padding: 28px 40px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .price-currency {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--brand);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .price-amount {
+      font-size: 72px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -3px;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1;
+    }
+
+    .price-suffix {
+      font-size: 14px;
+      color: var(--muted);
+      margin-left: 6px;
+      font-weight: 400;
+    }
+
+    /* ── FEATURES ── */
+    .features {
+      padding: 28px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .feature-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+    }
+
+    .feature-row + .feature-row {
+      border-top: 1px solid var(--border);
+    }
+
+    .feat-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--brand-dim);
+      border: 1px solid var(--brand-mid);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .feat-icon svg { width: 10px; height: 10px; }
+
+    .feat-text {
+      font-size: 14px;
+      color: #ccc;
+      line-height: 1.4;
+    }
+
+    .feat-text strong {
+      color: #fff;
+      font-weight: 500;
+    }
+
+    /* ── CTA ── */
+    .card-cta {
+      padding: 28px 40px 36px;
+    }
+
+    .btn-contact {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-    }
-    header img {
-      height: 40px;
-      width: 40px;
-    }
-    .hero {
-      background: linear-gradient(135deg, #1a73e8, #0c5fd1);
-      padding: 60px 20px;
-      text-align: center;
+      width: 100%;
+      padding: 16px 24px;
+      background: var(--brand);
       color: #fff;
-    }
-    .hero h1 {
-      font-size: 2.5em;
-      margin: 0;
-    }
-    .hero p {
-      font-size: 1.2em;
-      margin-top: 10px;
-      opacity: 0.9;
-    }
-    .container {
-      max-width: 900px;
-      margin: 40px auto;
-      background: #1e1e1e;
-      padding: 40px;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.6);
-      text-align: center;
-    }
-    h2 {
-      margin-top: 0;
-      color: #ff9800;
-    }
-    .price {
-      font-size: 2.8em;
-      color: #1a73e8;
-      margin: 20px 0;
-      font-weight: bold;
-    }
-    .features {
-      text-align: left;
-      margin: 30px auto;
-      max-width: 600px;
-      color: #ddd;
-    }
-    .features li {
-      margin: 12px 0;
-      padding-left: 25px;
-      position: relative;
-      font-size: 1.05em;
-    }
-    .features li::before {
-      content: "✔";
-      color: #ff9800;
-      position: absolute;
-      left: 0;
-    }
-    .btn {
-      display: inline-block;
-      background: #ff9800;
-      color: #121212;
-      padding: 16px 32px;
-      border-radius: 8px;
+      font-family: 'Sora', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: 14px;
+      cursor: pointer;
       text-decoration: none;
-      font-size: 1.3em;
-      font-weight: bold;
-      transition: background 0.3s ease;
-      margin-top: 20px;
+      transition: all 0.2s ease;
+      letter-spacing: -0.2px;
     }
-    .btn:hover {
-      background: #e68900;
+
+    .btn-contact:hover {
+      background: #ff7c1a;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(255,107,0,0.3);
     }
-    .note {
-      margin-top: 25px;
-      font-size: 0.95em;
-      color: #aaa;
+
+    .btn-contact:active {
+      transform: translateY(0);
     }
-    footer {
-      margin-top: 40px;
+
+    .btn-contact svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    .contact-note {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
       text-align: center;
-      font-size: 0.9em;
-      color: #777;
-      padding: 20px;
-      background: #1c1c1c;
+      line-height: 1.5;
+    }
+
+    .contact-note a {
+      color: var(--brand);
+      text-decoration: none;
+    }
+
+    .contact-note a:hover { text-decoration: underline; }
+
+    /* ── TRUST STRIP ── */
+    .trust-strip {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      padding: 0 20px 80px;
+      flex-wrap: wrap;
+    }
+
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .trust-item svg { width: 14px; height: 14px; color: var(--brand); flex-shrink: 0; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 0 40px;
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    footer a { color: var(--sub); text-decoration: none; }
+    footer a:hover { color: var(--brand); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-eyebrow { animation: fadeUp 0.5s ease both; }
+    .hero h1      { animation: fadeUp 0.5s 0.1s ease both; }
+    .hero-sub     { animation: fadeUp 0.5s 0.2s ease both; }
+    .pricing-card { animation: fadeUp 0.5s 0.3s ease both; }
+
+    @media (max-width: 560px) {
+      nav { padding: 14px 20px; }
+      .card-header, .price-block, .features, .card-cta { padding-left: 24px; padding-right: 24px; }
+      .price-amount { font-size: 56px; }
+      .trust-strip { gap: 20px; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <img src="icon1.png" alt="Locasdot Logo">
-    <h1>Locasdot License Renewal</h1>
-  </header>
+
+  <nav>
+    <a class="nav-logo" href="#">
+      <img src="icon1.png" alt="Locas" onerror="this.style.display='none'">
+      <span class="nav-logo-text">Locas<span>.</span></span>
+    </a>
+    <span class="nav-badge">Lifetime Plan</span>
+  </nav>
 
   <section class="hero">
-    <h1>Renew Your License</h1>
-    <p>One-time payment. Lifetime access. Secure your data today.</p>
+    <div class="hero-eyebrow">License Renewal</div>
+    <h1>Pay once.<br><em>Own it forever.</em></h1>
+    <p class="hero-sub">No subscriptions. No monthly fees. One payment secures your data and keeps locasdot running forever.</p>
   </section>
 
-  <div class="container">
-    <h2>Lifetime Plan</h2>
-    <p>Enjoy uninterrupted access and secure your data with a one‑time payment.</p>
-    <div class="price">₹999</div>
+  <div class="pricing-wrap">
+    <div class="pricing-card">
 
-    <ul class="features">
-      <li>Lifetime validity — pay once, use forever</li>
-      <li>Data security and privacy guaranteed</li>
-      <li>Instant license renewal after payment</li>
-      <li>Developed and maintained by Omkar Jagtap</li>
-      <li>Protected under Locastitch proprietorship</li>
-    </ul>
+      <div class="card-header">
+        <div class="plan-label">Lifetime Access</div>
+        <div class="plan-name">locasdot Business Suite</div>
+        <div class="plan-desc">Complete invoicing, inventory, parties &amp; reporting — owned by you, forever.</div>
+      </div>
 
-    <!-- Replace with your actual UPI ID or Razorpay checkout -->
-    <a href="upi://pay?pa=omkarjagtap@upi&pn=Omkar%20Jagtap&am=999&cu=INR&tn=Locasdot%20Lifetime%20Renewal" class="btn">
-      Pay Now
-    </a>
+      <div class="price-block">
+        <span class="price-currency">₹</span>
+        <span class="price-amount">999</span>
+        <span class="price-suffix">one-time</span>
+      </div>
 
-    <p class="note">Payments are made directly to the developer for data security and maintenance. Locasdot remains free to use.</p>
+      <div class="features">
+        <div class="feature-row">
+          <div class="feat-icon">
+            <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.5 5L4 7.5L8.5 2.5" stroke="#FF6B00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="feat-text"><strong>Lifetime validity</strong> — pay once, use forever</div>
+        </div>
+        <div class="feature-row">
+          <div class="feat-icon">
+            <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.5 5L4 7.5L8.5 2.5" stroke="#FF6B00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="feat-text"><strong>Data security &amp; privacy</strong> — your data stays on your device</div>
+        </div>
+        <div class="feature-row">
+          <div class="feat-icon">
+            <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.5 5L4 7.5L8.5 2.5" stroke="#FF6B00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="feat-text"><strong>Instant activation</strong> — license renewed same day</div>
+        </div>
+        <div class="feature-row">
+          <div class="feat-icon">
+            <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.5 5L4 7.5L8.5 2.5" stroke="#FF6B00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="feat-text"><strong>Direct developer support</strong> — maintained by Omkar Jagtap</div>
+        </div>
+        <div class="feature-row">
+          <div class="feat-icon">
+            <svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M1.5 5L4 7.5L8.5 2.5" stroke="#FF6B00" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="feat-text"><strong>Locastitch proprietorship</strong> — protected and trusted</div>
+        </div>
+      </div>
+
+      <div class="card-cta">
+        <a class="btn-contact" href="mailto:jagtapomkar3052002@gmail.com?subject=Locas%20License%20Renewal%20-%20Lifetime%20Plan&body=Hi%20Omkar%2C%0A%0AI%20would%20like%20to%20renew%20my%20Locas%20lifetime%20license.%0A%0APlease%20share%20the%20payment%20details.%0A%0AThanks!">
+          <svg viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="4" width="14" height="10" rx="2" stroke="white" stroke-width="1.4"/>
+            <path d="M2 6.5L9 10.5L16 6.5" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
+          </svg>
+          Contact Us to Renew
+        </a>
+        <p class="contact-note">
+          Email us at <a href="mailto:jagtapomkar3052002@gmail.com">jagtapomkar3052002@gmail.com</a><br>
+          We'll send payment details and activate your license same day.
+        </p>
+      </div>
+
+    </div>
   </div>
 
+  <div class="trust-strip">
+    <div class="trust-item">
+      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M7 1L8.5 5H13L9.5 7.5L10.8 11.5L7 9L3.2 11.5L4.5 7.5L1 5H5.5L7 1Z" stroke="#FF6B00" stroke-width="1.2" stroke-linejoin="round"/>
+      </svg>
+      Indie developed
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="5" width="10" height="8" rx="1.5" stroke="#FF6B00" stroke-width="1.2"/>
+        <path d="M5 5V4a2 2 0 014 0v1" stroke="#FF6B00" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      Data stays local
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="7" cy="7" r="5.5" stroke="#FF6B00" stroke-width="1.2"/>
+        <path d="M4.5 7L6.5 9L9.5 5" stroke="#FF6B00" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      No subscriptions
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M2 7h10M7 2v10" stroke="#FF6B00" stroke-width="1.2" stroke-linecap="round"/>
+      </svg>
+      Same-day activation
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
   <footer>
-    © 2026 Locastitch. Locasdot is a project developed under Locastitch proprietorship.
+    © 2026 Locastitch · Locas is developed under Locastitch proprietorship<br>
+    <a href="mailto:jagtapomkar3052002@gmail.com">jagtapomkar3052002@gmail.com</a>
   </footer>
+
 </body>
 </html>
