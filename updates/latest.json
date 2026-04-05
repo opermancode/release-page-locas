@@ -1,0 +1,8 @@
+{
+  "version": "1.10.13",
+  "releaseDate": "2026-04-06",
+  "releaseNotes": "Bug fixes and improvements",
+  "windows": {
+    "url": "https://github.com/opermancode/locas/releases/download/desktop%2Fv1.10.13/Locas.Setup.1.10.13.exe"
+  }
+}
