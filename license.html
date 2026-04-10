@@ -2,156 +2,237 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Locasdot - Privacy Policy & License Agreement</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legal - Locasdot Smart Billing</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --primary: #2563eb;
+      --text-dark: #1e293b;
+      --text-light: #64748b;
+      --bg-gray: #f8fafc;
+      --border: #e2e8f0;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 20px;
-      background-color: #f9f9f9;
-      color: #333;
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7;
+      background-color: var(--bg-gray);
+      color: var(--text-dark);
+      padding-top: 60px;
     }
-    h1, h2 {
-      color: #222;
+
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 2rem;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    pre {
-      background: #fff;
-      padding: 15px;
-      border: 1px solid #ccc;
-      overflow-x: auto;
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      background: var(--white);
+      padding: 3rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+
+    .meta-info {
+      background: var(--bg-gray);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      border-left: 4px solid var(--primary);
+    }
+
+    .meta-info p {
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--bg-gray);
+      color: var(--primary);
+    }
+
+    h3 {
+      font-size: 1.1rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-dark);
+    }
+
+    p, li {
+      margin-bottom: 1rem;
+      color: #475569;
+    }
+
+    ul {
+      margin-left: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-divider {
+      text-align: center;
+      margin: 4rem 0;
+      position: relative;
+    }
+
+    .section-divider::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      z-index: 1;
+    }
+
+    .section-divider span {
+      background: var(--white);
+      padding: 0 20px;
+      position: relative;
+      z-index: 2;
+      font-weight: 600;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .contact-link {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .contact-link:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem;
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    /* Acceptance Box */
+    .agreement-footer {
+      background: #eff6ff;
+      padding: 2rem;
+      border-radius: 8px;
+      margin-top: 3rem;
+      text-align: center;
+      border: 1px solid #bfdbfe;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        margin: 20px;
+        padding: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Locasdot - SMART BILLING FOR INDIA</h1>
-  <h2>END USER LICENSE AGREEMENT & PRIVACY POLICY</h2>
-  <p><strong>Create Date:</strong> March 2026</p>
-  <p><strong>Developed by:</strong> Omkar Ganesh Jagtap</p>
-  <p><strong>Contact:</strong> <a href="https://locasdot.vercel.app/index.html#contact">Contact Page</a></p>
 
-  <pre>
-      By installing locasdot, you agree to the following terms. Please read carefully.
-      
-      ================================================================
-      PART 1 - TERMS AND CONDITIONS
-      ================================================================
-      
-      1. LICENSE GRANT
-         Omkar Jagtap grants you a personal, non-exclusive, non-transferable
-         license to install and use this software on Windows devices that you
-         own or control, solely for your personal or internal business purposes.
-      
-      2. PERMITTED USE
-         You may use locasdot to:
-         - Create and manage GST invoices for your business
-         - Track customers, suppliers, inventory and expenses
-         - Generate and export reports for accounting purposes
-         - Back up your business data to Google Drive
-      
-      3. RESTRICTIONS
-         You may NOT:
-         - Sell, rent, lease or sublicense this software
-         - Reverse engineer, decompile or disassemble the software
-         - Use the software for any unlawful purpose
-         - Remove or alter any proprietary notices or labels
-      
-      4. GST COMPLIANCE DISCLAIMER
-         locasdot is a billing and record-keeping tool. It is your responsibility
-         to verify that all GST calculations, invoice formats and tax filings
-         comply with current Indian GST laws. locasdot does not provide legal or
-         tax advice. Consult a qualified CA for compliance guidance.
-      
-      5. DATA OWNERSHIP
-         All business data you enter into locasdot (invoices, parties, inventory,
-         expenses) belongs entirely to you. locasdot does not claim any rights
-         over your business data.
-      
-      6. DISCLAIMER OF WARRANTIES
-         This software is provided "AS IS" without warranty of any kind.
-         The developer makes no warranties, express or implied, including but
-         not limited to warranties of merchantability or fitness for a
-         particular purpose.
-      
-      7. LIMITATION OF LIABILITY
-         In no event shall the developer be liable for any indirect, incidental,
-         special or consequential damages arising from the use or inability
-         to use this software. Maximum liability is limited to INR 0
-         (the software is free).
-      
-      8. UPDATES
-         locasdot may check for updates automatically. Updates are optional.
-         You control when to download and install new versions.
-      
-      9. TERMINATION
-         This license is effective until terminated. You may terminate it
-         at any time by uninstalling the software. It terminates automatically
-         if you fail to comply with these terms.
-      
-      10. GOVERNING LAW
-          These terms shall be governed by the laws of India. Any disputes
-          shall be subject to the jurisdiction of courts in India.
-      
-      ================================================================
-      PART 2 - PRIVACY POLICY
-      ================================================================
-      
-      1. DATA STORED LOCALLY
-         locasdot stores all your business data (invoices, customers, inventory,
-         expenses, business profile) locally on your device using a SQLite
-         database. This data never leaves your device unless you explicitly
-         use the Google Drive backup feature.
-      
-      2. AUTHENTICATION
-         locasdot uses Firebase Authentication to verify your identity.
-         Firebase may collect your email address and login timestamps.
-         Firebase is a Google service - see Google's Privacy Policy at
-         https://policies.google.com/privacy for details.
-      
-      3. GOOGLE DRIVE BACKUP (OPTIONAL)
-         If you choose to connect Google Drive:
-         - Your backup data is stored in your own Google Drive account
-         - locasdot only accesses the specific backup file it creates
-         - You can disconnect Google Drive at any time from Settings
-         - locasdot does not access any other files in your Google Drive
-      
-      4. NO DATA COLLECTION
-         locasdot does NOT:
-         - Collect or transmit your business data to any server
-         - Sell or share your data with any third party
-         - Use your data for advertising or analytics
-         - Track your usage behavior
-      
-      5. UPDATE CHECKS
-         locasdot periodically checks GitHub for new versions. This request
-         includes no personal data - only a plain HTTP GET to a public URL.
-      
-      6. CRASH REPORTING
-         locasdot does not automatically send crash reports. Errors are logged
-         locally to your device only.
-      
-      7. CHILDREN'S PRIVACY
-         locasdot is intended for business use by adults. We do not knowingly
-         collect data from anyone under 18.
-      
-      8. CHANGES TO THIS POLICY
-         We may update this policy with new software versions. Continued
-         use after an update constitutes acceptance of the new terms.
-      
-      9. CONTACT
-         Issues: https://locasdot.vercel.app/support.html
-      
-      ================================================================
-      
-      By clicking "I Agree" you confirm that you have read, understood and
-      agree to these Terms and Conditions and Privacy Policy.
-      
-      Copyright (C) 2026 locasdottitch. locasdot, All rights reserved.
-  </pre>
+  <header>
+    <div class="logo">Locasdot</div>
+    <a href="index.html" class="contact-link">Back to Home</a>
+  </header>
+
+  <div class="container">
+    <h1>Terms & Privacy Policy</h1>
+    <p style="color: var(--text-light); margin-bottom: 2rem;">Please review the End User License Agreement and Privacy Policy for Locasdot Smart Billing.</p>
+
+    <div class="meta-info">
+      <p><strong>Effective Date:</strong> March 2026</p>
+      <p><strong>Developer:</strong> Omkar Ganesh Jagtap</p>
+      <p><strong>Contact:</strong> <a href="https://locasdot.vercel.app/index.html#contact" class="contact-link">Support Portal</a></p>
+    </div>
+
+    <div class="section-divider"><span>Part 1: Terms & Conditions</span></div>
+
+    <h3>1. License Grant</h3>
+    <p>Omkar Jagtap grants you a personal, non-exclusive, non-transferable license to install and use this software on Windows devices that you own or control, solely for your personal or internal business purposes.</p>
+
+    <h3>2. Permitted Use</h3>
+    <p>You may use Locasdot to:</p>
+    <ul>
+      <li>Create and manage GST invoices for your business</li>
+      <li>Track customers, suppliers, inventory and expenses</li>
+      <li>Generate and export reports for accounting purposes</li>
+      <li>Back up your business data to Google Drive</li>
+    </ul>
+
+    <h3>3. Restrictions</h3>
+    <p>You may <strong>NOT</strong> sell, rent, lease, or sublicense this software. Reverse engineering, decompiling, or using the software for unlawful purposes is strictly prohibited.</p>
+
+    <h3>4. GST Compliance Disclaimer</h3>
+    <p>Locasdot is a billing tool. It is your responsibility to verify that all GST calculations and tax filings comply with current Indian laws. Consult a qualified CA for official compliance guidance.</p>
+
+    <h3>5. Data Ownership</h3>
+    <p>All business data you enter belongs entirely to you. Locasdot does not claim any rights over your business data.</p>
+
+    <h3>6. Limitation of Liability</h3>
+    <p>This software is provided "AS IS". The developer shall not be liable for any incidental or consequential damages. Maximum liability is limited to INR 0.</p>
+
+    <div class="section-divider"><span>Part 2: Privacy Policy</span></div>
+
+    <h3>1. Local Data Storage</h3>
+    <p>Locasdot stores all your business data locally on your device using a SQLite database. This data never leaves your device unless you explicitly use the Google Drive backup feature.</p>
+
+    <h3>2. Authentication</h3>
+    <p>Locasdot uses <strong>Firebase Authentication</strong> to verify your identity. Firebase may collect your email address and login timestamps. Refer to Google's Privacy Policy for details.</p>
+
+    <h3>3. Google Drive Backup</h3>
+    <p>If enabled, backup data is stored in your own Google Drive account. Locasdot only accesses the specific backup files it creates and cannot read other personal files in your Drive.</p>
+
+    <h3>4. No Data Collection</h3>
+    <p>Locasdot does not sell or share your data with third parties, nor does it track your usage behavior for advertising or analytics.</p>
+
+    <div class="agreement-footer">
+      <p><strong>By using Locasdot, you confirm that you have read and agreed to these terms.</strong></p>
+      <p style="font-size: 0.85rem; margin-top: 10px;">Copyright &copy; 2026 Locasdot. All rights reserved.</p>
+    </div>
+  </div>
 
   <footer>
-    <p>&copy; 2026 Locasdot. All rights reserved.</p>
-    <p><a href="index.html">Back to Home</a></p>
+    <p>&copy; 2026 Locasdot - Smart Billing for India</p>
+    <p><a href="https://locasdot.vercel.app/support.html" class="contact-link">Need Help?</a></p>
   </footer>
+
 </body>
 </html>
