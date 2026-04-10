@@ -3,235 +3,265 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Legal - Locasdot Smart Billing</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <title>License & Privacy — Locas</title>
+  <link rel="icon" type="image/png" href="icon1.png">
+  <link rel="apple-touch-icon" href="icon1.png">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --primary: #2563eb;
-      --text-dark: #1e293b;
-      --text-light: #64748b;
-      --bg-gray: #f8fafc;
-      --border: #e2e8f0;
-      --white: #ffffff;
+      --brand: #FF6B00;
+      --brand-dark: #CC5500;
+      --dark: #0F0F0F;
+      --dark2: #1A1A1A;
+      --text: #F5F5F5;
+      --muted: #888;
+      --border: rgba(255,255,255,0.08);
+      --card: rgba(255,255,255,0.04);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'DM Sans', sans-serif;
+      background: var(--dark);
+      color: var(--text);
       line-height: 1.7;
-      background-color: var(--bg-gray);
-      color: var(--text-dark);
-      padding-top: 60px;
+      overflow-x: hidden;
     }
 
-    header {
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      padding: 1.5rem 2rem;
+    /* Subtle Grain Texture */
+    body::before {
+      content: '';
       position: fixed;
-      top: 0;
-      width: 100%;
-      z-index: 100;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    nav {
+      padding: 1.5rem 6%;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      background: rgba(15,15,15,0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .logo {
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--brand);
+      text-decoration: none;
+      letter-spacing: -0.03em;
     }
 
-    .container {
-      max-width: 1000px;
-      margin: 40px auto;
-      background: var(--white);
-      padding: 3rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    }
-
-    .meta-info {
-      background: var(--bg-gray);
-      padding: 1.5rem;
-      border-radius: 8px;
-      margin-bottom: 2rem;
-      border-left: 4px solid var(--primary);
-    }
-
-    .meta-info p {
+    .back-link {
+      color: var(--muted);
+      text-decoration: none;
       font-size: 0.9rem;
-      color: var(--text-light);
+      font-weight: 500;
+      transition: color 0.2s;
     }
+    .back-link:hover { color: var(--text); }
+
+    .content-wrapper {
+      max-width: 850px;
+      margin: 4rem auto;
+      padding: 0 6%;
+    }
+
+    header { margin-bottom: 4rem; }
 
     h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+
+    .meta-box {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      margin-bottom: 4rem;
+    }
+
+    .meta-item label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--brand);
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+
+    .meta-item p { font-weight: 500; font-size: 1rem; color: var(--text); }
+    .meta-item a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--brand); }
+
+    section { margin-bottom: 4rem; }
+
+    .section-tag {
+      color: var(--brand);
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      margin-bottom: 1rem;
+      display: block;
     }
 
     h2 {
-      font-size: 1.5rem;
-      margin-top: 2.5rem;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 2px solid var(--bg-gray);
-      color: var(--primary);
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.02em;
     }
 
     h3 {
       font-size: 1.1rem;
-      margin-top: 1.5rem;
-      margin-bottom: 0.5rem;
-      color: var(--text-dark);
+      margin: 2rem 0 0.75rem;
+      color: var(--text);
+      font-weight: 700;
     }
 
     p, li {
-      margin-bottom: 1rem;
-      color: #475569;
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 1.2rem;
+      font-weight: 300;
     }
 
-    ul {
-      margin-left: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
+    ul { margin-left: 1.5rem; margin-bottom: 2rem; }
+    li { margin-bottom: 0.75rem; padding-left: 0.5rem; }
 
-    .section-divider {
+    .highlight { color: var(--brand); font-weight: 500; }
+
+    .agreement-card {
+      background: linear-gradient(145deg, rgba(255,107,0,0.1), transparent);
+      padding: 2.5rem;
+      border-radius: 24px;
+      border: 1px solid rgba(255,107,0,0.2);
       text-align: center;
-      margin: 4rem 0;
-      position: relative;
-    }
-
-    .section-divider::before {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 0;
-      width: 100%;
-      height: 1px;
-      background: var(--border);
-      z-index: 1;
-    }
-
-    .section-divider span {
-      background: var(--white);
-      padding: 0 20px;
-      position: relative;
-      z-index: 2;
-      font-weight: 600;
-      color: var(--text-light);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    .contact-link {
-      color: var(--primary);
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .contact-link:hover {
-      text-decoration: underline;
+      margin-top: 5rem;
     }
 
     footer {
       text-align: center;
-      padding: 3rem;
-      color: var(--text-light);
-      font-size: 0.9rem;
+      padding: 4rem 6%;
+      border-top: 1px solid var(--border);
+      margin-top: 5rem;
     }
 
-    /* Acceptance Box */
-    .agreement-footer {
-      background: #eff6ff;
-      padding: 2rem;
-      border-radius: 8px;
-      margin-top: 3rem;
-      text-align: center;
-      border: 1px solid #bfdbfe;
-    }
+    .footer-copy { color: var(--muted); font-size: 0.85rem; line-height: 1.6; }
 
     @media (max-width: 768px) {
-      .container {
-        margin: 20px;
-        padding: 1.5rem;
-      }
+      .content-wrapper { margin: 2rem auto; }
+      h1 { font-size: 2.8rem; }
+      .meta-box { padding: 1.5rem; gap: 1rem; }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">Locasdot</div>
-    <a href="index.html" class="contact-link">Back to Home</a>
-  </header>
+  <nav>
+    <a href="index.html" class="logo">Locas.</a>
+    <a href="index.html" class="back-link">Back to Home</a>
+  </nav>
 
-  <div class="container">
-    <h1>Terms & Privacy Policy</h1>
-    <p style="color: var(--text-light); margin-bottom: 2rem;">Please review the End User License Agreement and Privacy Policy for Locasdot Smart Billing.</p>
+  <main class="content-wrapper">
+    <header>
+      <h1>Legal <span style="color:var(--brand)">Agreement</span></h1>
+      <p style="color:var(--muted); font-size: 1.1rem;">Please read the following Terms and Privacy Policy before using the software.</p>
+    </header>
 
-    <div class="meta-info">
-      <p><strong>Effective Date:</strong> March 2026</p>
-      <p><strong>Developer:</strong> Omkar Ganesh Jagtap</p>
-      <p><strong>Contact:</strong> <a href="https://locasdot.vercel.app/index.html#contact" class="contact-link">Support Portal</a></p>
+    <div class="meta-box">
+      <div class="meta-item">
+        <label>Created</label>
+        <p>March 2026</p>
+      </div>
+      <div class="meta-item">
+        <label>Developed By</label>
+        <p>Omkar Ganesh Jagtap</p>
+      </div>
+      <div class="meta-item">
+        <label>Support</label>
+        <p><a href="https://locasdot.vercel.app/index.html#contact">Contact Developer</a></p>
+      </div>
     </div>
 
-    <div class="section-divider"><span>Part 1: Terms & Conditions</span></div>
+    <section>
+      <span class="section-tag">Part 01</span>
+      <h2>Terms & Conditions</h2>
+      
+      <h3>1. License Grant</h3>
+      <p>Omkar Jagtap grants you a personal, non-exclusive, non-transferable license to install and use Locasdot on <span class="highlight">Windows and Android</span> devices that you own or control, solely for your personal or internal business purposes.</p>
 
-    <h3>1. License Grant</h3>
-    <p>Omkar Jagtap grants you a personal, non-exclusive, non-transferable license to install and use this software on Windows devices that you own or control, solely for your personal or internal business purposes.</p>
+      <h3>2. Permitted Use</h3>
+      <ul>
+        <li>Create and manage GST compliant invoices for your business.</li>
+        <li>Track customers, suppliers, inventory, and expenses.</li>
+        <li>Generate and export reports for accounting purposes.</li>
+        <li>Securely back up your business data to your own Google Drive.</li>
+      </ul>
 
-    <h3>2. Permitted Use</h3>
-    <p>You may use Locasdot to:</p>
-    <ul>
-      <li>Create and manage GST invoices for your business</li>
-      <li>Track customers, suppliers, inventory and expenses</li>
-      <li>Generate and export reports for accounting purposes</li>
-      <li>Back up your business data to Google Drive</li>
-    </ul>
+      <h3>3. Restrictions</h3>
+      <p>You may <span class="highlight">NOT</span> sell, rent, lease or sublicense this software; reverse engineer, decompile or disassemble the software; or use it for any unlawful purposes.</p>
 
-    <h3>3. Restrictions</h3>
-    <p>You may <strong>NOT</strong> sell, rent, lease, or sublicense this software. Reverse engineering, decompiling, or using the software for unlawful purposes is strictly prohibited.</p>
+      <h3>4. GST Compliance Disclaimer</h3>
+      <p>Locasdot is a billing tool. It is your responsibility to verify that all GST calculations and tax filings comply with current Indian GST laws. Consult a qualified CA for compliance guidance.</p>
 
-    <h3>4. GST Compliance Disclaimer</h3>
-    <p>Locasdot is a billing tool. It is your responsibility to verify that all GST calculations and tax filings comply with current Indian laws. Consult a qualified CA for official compliance guidance.</p>
+      <h3>5. Data Ownership</h3>
+      <p>All business data you enter into Locasdot belongs <span class="highlight">entirely to you</span>. Locasdot does not claim any rights over your business data.</p>
 
-    <h3>5. Data Ownership</h3>
-    <p>All business data you enter belongs entirely to you. Locasdot does not claim any rights over your business data.</p>
+      <h3>6. Disclaimer & Liability</h3>
+      <p>This software is provided "AS IS". Maximum liability is limited to <span class="highlight">INR 0</span> as the software is provided free of charge.</p>
+    </section>
 
-    <h3>6. Limitation of Liability</h3>
-    <p>This software is provided "AS IS". The developer shall not be liable for any incidental or consequential damages. Maximum liability is limited to INR 0.</p>
+    <section>
+      <span class="section-tag">Part 02</span>
+      <h2>Privacy Policy</h2>
+      
+      <h3>1. Data Stored Locally</h3>
+      <p>Locasdot uses a local SQLite database. Your business profile, invoices, and customer details <span class="highlight">never leave your device</span> unless you explicitly use the Google Drive backup feature.</p>
 
-    <div class="section-divider"><span>Part 2: Privacy Policy</span></div>
+      <h3>2. Authentication</h3>
+      <p>We use <span class="highlight">Firebase Authentication</span> to verify your identity. Firebase may collect your email address and login timestamps. Refer to Google's Privacy Policy for more details.</p>
 
-    <h3>1. Local Data Storage</h3>
-    <p>Locasdot stores all your business data locally on your device using a SQLite database. This data never leaves your device unless you explicitly use the Google Drive backup feature.</p>
+      <h3>3. Google Drive Backup</h3>
+      <p>Your backup data is stored in your own Google Drive account. Locasdot only accesses the specific backup file it creates and does not access any other files in your Drive.</p>
 
-    <h3>2. Authentication</h3>
-    <p>Locasdot uses <strong>Firebase Authentication</strong> to verify your identity. Firebase may collect your email address and login timestamps. Refer to Google's Privacy Policy for details.</p>
+      <h3>4. Update Checks</h3>
+      <p>Locasdot periodically checks GitHub for new versions. This request includes no personal data — it is a plain HTTP GET to a public URL.</p>
 
-    <h3>3. Google Drive Backup</h3>
-    <p>If enabled, backup data is stored in your own Google Drive account. Locasdot only accesses the specific backup files it creates and cannot read other personal files in your Drive.</p>
+      <h3>5. Children's Privacy</h3>
+      <p>Locasdot is intended for business use by adults. We do not knowingly collect data from anyone under 18.</p>
+    </section>
 
-    <h3>4. No Data Collection</h3>
-    <p>Locasdot does not sell or share your data with third parties, nor does it track your usage behavior for advertising or analytics.</p>
-
-    <div class="agreement-footer">
-      <p><strong>By using Locasdot, you confirm that you have read and agreed to these terms.</strong></p>
-      <p style="font-size: 0.85rem; margin-top: 10px;">Copyright &copy; 2026 Locasdot. All rights reserved.</p>
+    <div class="agreement-card">
+      <h3 style="margin-top:0;">Consent</h3>
+      <p style="margin-bottom:0;">By installing Locasdot or clicking "I Agree" within the application, you confirm that you have read, understood, and agree to these Terms and the Privacy Policy.</p>
     </div>
-  </div>
+  </main>
 
   <footer>
-    <p>&copy; 2026 Locasdot - Smart Billing for India</p>
-    <p><a href="https://locasdot.vercel.app/support.html" class="contact-link">Need Help?</a></p>
+    <div class="footer-copy">
+      © 2026 Locastitch. Locasdot — All rights reserved.<br>
+      For issues: <a href="https://locasdot.vercel.app/support.html" style="color:var(--brand); text-decoration:none;">Support Portal</a>
+    </div>
   </footer>
 
 </body>
