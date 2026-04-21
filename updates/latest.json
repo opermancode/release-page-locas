@@ -1,8 +1,8 @@
 {
-  "version": "1.14.1",
+  "version": "1.14.2",
   "releaseDate": "2026-04-13",
   "releaseNotes": "Bug fixes and improvements",
   "windows": {
-    "url": "https://github.com/opermancode/locas/releases/download/desktop%2Fv1.14.1/Locas.Setup.1.14.1.exe"
+    "url": "https://github.com/opermancode/locas/releases/download/desktop%2Fv1.14.2/Locas.Setup.1.14.2.exe"
   }
 }
