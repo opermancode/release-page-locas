@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Locas Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0b;
+  --bg2: #111113;
+  --bg3: #18181b;
+  --bg4: #222226;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #e8e6e1;
+  --muted: #6b6b75;
+  --muted2: #9a9aa4;
+  --orange: #E85D04;
+  --orange2: #FF7A24;
+  --green: #22c55e;
+  --red: #ef4444;
+  --yellow: #f59e0b;
+  --blue: #3b82f6;
+  --purple: #a855f7;
+  --mono: 'DM Mono', monospace;
+  --sans: 'Manrope', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--bg); color: var(--text); font-family: var(--sans); overflow: hidden; }
+
+/* ── LOGIN ── */
+#loginScreen {
+  position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: var(--bg);
+  z-index: 1000;
+}
+.login-box {
+  width: 380px;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+}
+.login-logo {
+  font-family: var(--mono); font-size: 1.5rem; font-weight: 500;
+  color: var(--text); margin-bottom: .25rem;
+}
+.login-logo span { color: var(--orange); }
+.login-sub { font-size: .75rem; color: var(--muted); margin-bottom: 2rem; }
+.login-field { margin-bottom: 1rem; }
+.login-field label { display: block; font-size: .68rem; font-family: var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
+.login-field input {
+  width: 100%; background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 8px; padding: .7rem 1rem; color: var(--text);
+  font-family: var(--sans); font-size: .875rem; outline: none;
+  transition: border-color .2s;
+}
+.login-field input:focus { border-color: rgba(232,93,4,.5); }
+.login-btn {
+  width: 100%; background: var(--orange); color: white; border: none;
+  border-radius: 8px; padding: .8rem; font-family: var(--sans);
+  font-size: .9rem; font-weight: 700; cursor: pointer; transition: background .2s;
+  margin-top: .5rem;
+}
+.login-btn:hover { background: var(--orange2); }
+.login-btn:disabled { opacity: .5; cursor: not-allowed; }
+.login-error { font-size: .78rem; color: var(--red); margin-top: .75rem; text-align: center; display: none; }
+
+/* ── APP SHELL ── */
+#app { display: none; flex-direction: column; height: 100vh; }
+
+/* TOPBAR */
+.topbar {
+  height: 52px; background: var(--bg2); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 1.5rem; gap: 1rem; flex-shrink: 0;
+}
+.topbar-logo { font-family: var(--mono); font-size: 1.1rem; color: var(--text); }
+.topbar-logo span { color: var(--orange); }
+.topbar-sep { width: 1px; height: 20px; background: var(--border2); }
+.topbar-title { font-size: .78rem; color: var(--muted); font-family: var(--mono); }
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: .75rem; }
+.topbar-user { font-size: .72rem; color: var(--muted); font-family: var(--mono); }
+.topbar-refresh {
+  background: var(--bg3); border: 1px solid var(--border); color: var(--muted2);
+  border-radius: 6px; padding: .35rem .75rem; font-size: .72rem; font-family: var(--mono);
+  cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: .4rem;
+}
+.topbar-refresh:hover { border-color: var(--border2); color: var(--text); }
+.topbar-signout {
+  background: transparent; border: 1px solid var(--border); color: var(--muted);
+  border-radius: 6px; padding: .35rem .75rem; font-size: .72rem; font-family: var(--mono);
+  cursor: pointer; transition: all .2s;
+}
+.topbar-signout:hover { border-color: var(--red); color: var(--red); }
+
+/* TOOLBAR */
+.toolbar {
+  height: 48px; background: var(--bg2); border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 1.5rem; gap: .75rem; flex-shrink: 0;
+}
+.toolbar-search {
+  display: flex; align-items: center; gap: .5rem;
+  background: var(--bg3); border: 1px solid var(--border); border-radius: 6px;
+  padding: .35rem .75rem; width: 240px;
+}
+.toolbar-search input {
+  background: none; border: none; outline: none; color: var(--text);
+  font-family: var(--mono); font-size: .75rem; width: 100%;
+}
+.toolbar-search input::placeholder { color: var(--muted); }
+.toolbar-search-icon { color: var(--muted); font-size: .8rem; flex-shrink: 0; }
+.toolbar-sep { width: 1px; height: 20px; background: var(--border); }
+.tb-btn {
+  display: flex; align-items: center; gap: .4rem;
+  background: var(--bg3); border: 1px solid var(--border); border-radius: 6px;
+  padding: .35rem .85rem; font-size: .72rem; font-family: var(--mono);
+  color: var(--muted2); cursor: pointer; transition: all .2s; white-space: nowrap;
+}
+.tb-btn:hover { border-color: var(--border2); color: var(--text); }
+.tb-btn.primary { background: var(--orange); border-color: var(--orange); color: white; }
+.tb-btn.primary:hover { background: var(--orange2); border-color: var(--orange2); }
+.tb-count { font-size: .68rem; color: var(--muted); font-family: var(--mono); margin-left: auto; }
+
+/* TABLE WRAPPER */
+.table-wrap {
+  flex: 1; overflow: auto; position: relative;
+}
+
+/* EXCEL TABLE */
+.excel-table {
+  width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: .72rem;
+  min-width: 1200px;
+}
+.excel-table thead {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--bg3);
+}
+.excel-table th {
+  padding: .6rem 1rem; text-align: left; color: var(--muted);
+  border-bottom: 1px solid var(--border2); border-right: 1px solid var(--border);
+  font-weight: 500; letter-spacing: .06em; text-transform: uppercase; font-size: .65rem;
+  white-space: nowrap; user-select: none; cursor: pointer;
+}
+.excel-table th:hover { color: var(--text); background: var(--bg4); }
+.excel-table th:last-child { border-right: none; }
+.excel-table td {
+  padding: .55rem 1rem; border-bottom: 1px solid var(--border);
+  border-right: 1px solid var(--border); vertical-align: middle;
+  white-space: nowrap;
+}
+.excel-table td:last-child { border-right: none; }
+.excel-table tbody tr { background: var(--bg); transition: background .1s; }
+.excel-table tbody tr:hover { background: var(--bg2); }
+.excel-table tbody tr.selected { background: rgba(232,93,4,.06); }
+
+/* ROW NUMBER */
+.row-num { color: var(--muted); font-size: .65rem; text-align: center; width: 40px; padding: .55rem .5rem; }
+
+/* BADGES */
+.badge {
+  display: inline-flex; align-items: center; gap: .3rem;
+  padding: .18rem .55rem; border-radius: 4px;
+  font-size: .65rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+}
+.badge-trial    { background: rgba(245,158,11,.1);  color: var(--yellow); border: 1px solid rgba(245,158,11,.2);  }
+.badge-yearly   { background: rgba(59,130,246,.1);  color: var(--blue);   border: 1px solid rgba(59,130,246,.2);  }
+.badge-lifetime { background: rgba(168,85,247,.1);  color: var(--purple); border: 1px solid rgba(168,85,247,.2);  }
+.badge-ok       { background: rgba(34,197,94,.1);   color: var(--green);  border: 1px solid rgba(34,197,94,.2);   }
+.badge-warn     { background: rgba(245,158,11,.1);  color: var(--yellow); border: 1px solid rgba(245,158,11,.2);  }
+.badge-bad      { background: rgba(239,68,68,.1);   color: var(--red);    border: 1px solid rgba(239,68,68,.2);   }
+.badge-blocked  { background: rgba(239,68,68,.1);   color: var(--red);    border: 1px solid rgba(239,68,68,.2);   }
+
+/* SYNC / BOOL */
+.bool-yes { color: var(--green); }
+.bool-no  { color: var(--muted); }
+
+/* ACTIONS CELL */
+.actions { display: flex; align-items: center; gap: .35rem; }
+.act-btn {
+  padding: .22rem .55rem; border-radius: 4px; font-size: .65rem; font-family: var(--mono);
+  border: 1px solid var(--border); background: var(--bg3); color: var(--muted2);
+  cursor: pointer; transition: all .15s; white-space: nowrap;
+}
+.act-btn:hover { border-color: var(--border2); color: var(--text); }
+.act-btn.danger:hover  { border-color: var(--red);    color: var(--red);    background: rgba(239,68,68,.08); }
+.act-btn.success:hover { border-color: var(--green);  color: var(--green);  background: rgba(34,197,94,.08); }
+.act-btn.warn:hover    { border-color: var(--yellow); color: var(--yellow); background: rgba(245,158,11,.08); }
+.act-btn.info:hover    { border-color: var(--blue);   color: var(--blue);   background: rgba(59,130,246,.08); }
+.act-btn.purple:hover  { border-color: var(--purple); color: var(--purple); background: rgba(168,85,247,.08); }
+
+/* EMPTY / LOADING */
+.table-state {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  height: 300px; gap: 1rem; color: var(--muted); font-family: var(--mono); font-size: .8rem;
+}
+.spinner {
+  width: 28px; height: 28px; border: 2px solid var(--border2);
+  border-top-color: var(--orange); border-radius: 50%; animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── MODAL ── */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,.75);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 900; opacity: 0; pointer-events: none; transition: opacity .2s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--bg2); border: 1px solid var(--border2); border-radius: 14px;
+  padding: 2rem; width: 420px; max-width: 95vw;
+  transform: translateY(12px); transition: transform .2s;
+  box-shadow: 0 40px 80px rgba(0,0,0,.6);
+}
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-title { font-size: 1rem; font-weight: 700; margin-bottom: .35rem; }
+.modal-sub { font-size: .78rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.5; }
+.modal-field { margin-bottom: 1rem; }
+.modal-field label { display: block; font-size: .65rem; font-family: var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: .4rem; }
+.modal-field input, .modal-field select {
+  width: 100%; background: var(--bg3); border: 1px solid var(--border);
+  border-radius: 7px; padding: .65rem .9rem; color: var(--text);
+  font-family: var(--mono); font-size: .8rem; outline: none; transition: border-color .2s;
+}
+.modal-field input:focus, .modal-field select:focus { border-color: rgba(232,93,4,.5); }
+.modal-field select option { background: var(--bg2); }
+.modal-actions { display: flex; gap: .75rem; margin-top: 1.5rem; justify-content: flex-end; }
+.modal-cancel {
+  background: var(--bg3); border: 1px solid var(--border); color: var(--muted2);
+  border-radius: 7px; padding: .6rem 1.25rem; font-family: var(--mono);
+  font-size: .78rem; cursor: pointer; transition: all .2s;
+}
+.modal-cancel:hover { color: var(--text); border-color: var(--border2); }
+.modal-confirm {
+  background: var(--orange); border: none; color: white; border-radius: 7px;
+  padding: .6rem 1.25rem; font-family: var(--mono); font-size: .78rem;
+  font-weight: 600; cursor: pointer; transition: background .2s;
+}
+.modal-confirm:hover { background: var(--orange2); }
+.modal-confirm.danger { background: var(--red); }
+.modal-confirm.danger:hover { background: #dc2626; }
+.modal-confirm:disabled { opacity: .5; cursor: not-allowed; }
+
+/* DEVICES PANEL */
+.devices-panel {
+  background: var(--bg3); border: 1px solid var(--border); border-radius: 8px;
+  padding: 1rem; margin-top: 1rem; max-height: 220px; overflow-y: auto;
+}
+.device-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: .5rem 0; border-bottom: 1px solid var(--border); gap: 1rem;
+}
+.device-row:last-child { border-bottom: none; padding-bottom: 0; }
+.device-info { flex: 1; }
+.device-name { font-size: .75rem; color: var(--text); font-weight: 500; }
+.device-meta { font-size: .65rem; color: var(--muted); margin-top: .15rem; font-family: var(--mono); }
+.device-rm { background: none; border: 1px solid var(--border); color: var(--muted); border-radius: 4px; padding: .2rem .5rem; font-size: .65rem; cursor: pointer; font-family: var(--mono); transition: all .15s; }
+.device-rm:hover { border-color: var(--red); color: var(--red); }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 9999;
+  background: var(--bg2); border: 1px solid var(--border2); border-radius: 8px;
+  padding: .75rem 1.25rem; font-size: .78rem; font-family: var(--mono);
+  display: flex; align-items: center; gap: .6rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,.5);
+  transform: translateY(20px); opacity: 0;
+  transition: all .3s; pointer-events: none;
+}
+.toast.show { transform: translateY(0); opacity: 1; }
+.toast.ok   { border-color: rgba(34,197,94,.3);  }
+.toast.err  { border-color: rgba(239,68,68,.3);  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-logo">Locas<span>.</span> Admin</div>
+    <div class="login-sub">Restricted access · omkarjagtap@gmail.com only</div>
+    <div class="login-field">
+      <label>Email</label>
+      <input type="email" id="loginEmail" value="omkarjagtap@gmail.com" placeholder="email">
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input type="password" id="loginPass" placeholder="password">
+    </div>
+    <button class="login-btn" id="loginBtn" onclick="doLogin()">Sign In →</button>
+    <div class="login-error" id="loginError"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-logo">Locas<span>.</span></div>
+    <div class="topbar-sep"></div>
+    <div class="topbar-title">User Management</div>
+    <div class="topbar-right">
+      <div class="topbar-user" id="topbarUser"></div>
+      <button class="topbar-refresh" onclick="loadUsers()">↻ Refresh</button>
+      <button class="topbar-signout" onclick="doSignOut()">Sign out</button>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="toolbar-search">
+      <span class="toolbar-search-icon">⌕</span>
+      <input type="text" id="searchInput" placeholder="Search email, plan, status..." oninput="filterTable()">
+    </div>
+    <div class="toolbar-sep"></div>
+    <button class="tb-btn primary" onclick="openCreateModal()">+ New User</button>
+    <button class="tb-btn" onclick="filterPlan('all')">All</button>
+    <button class="tb-btn" onclick="filterPlan('trial')">Trial</button>
+    <button class="tb-btn" onclick="filterPlan('yearly')">Yearly</button>
+    <button class="tb-btn" onclick="filterPlan('lifetime')">Lifetime</button>
+    <button class="tb-btn danger" onclick="filterPlan('blocked')" style="color:var(--red)">Blocked</button>
+    <div class="tb-count" id="tbCount"></div>
+  </div>
+
+  <!-- TABLE -->
+  <div class="table-wrap">
+    <div id="tableState" class="table-state">
+      <div class="spinner"></div>
+      <span>Fetching users…</span>
+    </div>
+    <table class="excel-table" id="usersTable" style="display:none">
+      <thead>
+        <tr>
+          <th style="width:40px">#</th>
+          <th onclick="sortBy('email')">Email ↕</th>
+          <th onclick="sortBy('plan')">Plan ↕</th>
+          <th onclick="sortBy('licenseExpiry')">Expiry ↕</th>
+          <th onclick="sortBy('daysLeft')">Days Left ↕</th>
+          <th>Status</th>
+          <th>Devices</th>
+          <th>Cloud Sync</th>
+          <th onclick="sortBy('lastLogin')">Last Login ↕</th>
+          <th onclick="sortBy('createdAt')">Created ↕</th>
+          <th style="min-width:320px">Actions</th>
+        </tr>
+      </thead>
+      <tbody id="usersBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modal">
+    <div class="modal-title" id="modalTitle">Create User</div>
+    <div class="modal-sub" id="modalSub"></div>
+    <div id="modalBody"></div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal()">Cancel</button>
+      <button class="modal-confirm" id="modalConfirm" onclick="modalAction()">Confirm</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC3QBviBOPK0S5oIKr4AzHMwJpUDlSFG0g",
+  authDomain: "locas-business.firebaseapp.com",
+  projectId: "locas-business",
+  storageBucket: "locas-business.firebasestorage.app",
+  messagingSenderId: "835960594579",
+  appId: "1:835960594579:web:caff2e80d3e96925176d66",
+};
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+const ADMIN_EMAIL = 'omkarjagtap@gmail.com';
+const BASE = ''; // Same origin on Vercel
+
+let idToken = null;
+let allUsers = [];
+let currentFilter = 'all';
+let currentSort = { key: null, dir: 1 };
+let pendingAction = null;
+
+// ── AUTH STATE ──
+onAuthStateChanged(auth, async (user) => {
+  if (user && user.email === ADMIN_EMAIL) {
+    idToken = await user.getIdToken();
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('app').style.display = 'flex';
+    document.getElementById('topbarUser').textContent = user.email;
+    loadUsers();
+  } else if (user) {
+    await signOut(auth);
+    showLoginError('Access denied. Only omkarjagtap@gmail.com allowed.');
+  }
+});
+
+// ── LOGIN ──
+window.doLogin = async () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPass').value;
+  const btn   = document.getElementById('loginBtn');
+  const err   = document.getElementById('loginError');
+  err.style.display = 'none';
+
+  if (email !== ADMIN_EMAIL) {
+    showLoginError('Access denied.'); return;
+  }
+
+  btn.disabled = true; btn.textContent = 'Signing in…';
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch (e) {
+    showLoginError(e.code === 'auth/invalid-credential' ? 'Wrong password.' : e.message);
+    btn.disabled = false; btn.textContent = 'Sign In →';
+  }
+};
+
+document.getElementById('loginPass').addEventListener('keydown', e => {
+  if (e.key === 'Enter') window.doLogin();
+});
+
+function showLoginError(msg) {
+  const el = document.getElementById('loginError');
+  el.textContent = msg; el.style.display = 'block';
+}
+
+window.doSignOut = async () => {
+  await signOut(auth);
+  idToken = null; allUsers = [];
+  document.getElementById('loginScreen').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+};
+
+// ── LOAD USERS ──
+window.loadUsers = async () => {
+  document.getElementById('tableState').style.display = 'flex';
+  document.getElementById('usersTable').style.display = 'none';
+  document.getElementById('tableState').innerHTML = '<div class="spinner"></div><span>Fetching users…</span>';
+
+  try {
+    idToken = await auth.currentUser.getIdToken(true);
+    const res = await fetch('/api/users', { headers: { Authorization: `Bearer ${idToken}` } });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    allUsers = data.users;
+    renderTable();
+  } catch (e) {
+    document.getElementById('tableState').innerHTML = `<span style="color:var(--red)">Error: ${e.message}</span>`;
+  }
+};
+
+// ── RENDER ──
+function renderTable() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+
+  let rows = allUsers.filter(u => {
+    const matchSearch = !search ||
+      u.email.toLowerCase().includes(search) ||
+      (u.plan || '').toLowerCase().includes(search);
+    const matchFilter =
+      currentFilter === 'all' ? true :
+      currentFilter === 'blocked' ? (u.blocked || u.disabled) :
+      u.plan === currentFilter;
+    return matchSearch && matchFilter;
+  });
+
+  if (currentSort.key) {
+    rows.sort((a, b) => {
+      let av = a[currentSort.key] ?? '', bv = b[currentSort.key] ?? '';
+      if (typeof av === 'string') av = av.toLowerCase();
+      if (typeof bv === 'string') bv = bv.toLowerCase();
+      return av < bv ? -currentSort.dir : av > bv ? currentSort.dir : 0;
+    });
+  }
+
+  document.getElementById('tbCount').textContent = `${rows.length} / ${allUsers.length} users`;
+
+  const tbody = document.getElementById('usersBody');
+  tbody.innerHTML = '';
+
+  rows.forEach((u, i) => {
+    const isBlocked = u.blocked || u.disabled;
+
+    // Plan badge
+    const planBadge = {
+      trial: '<span class="badge badge-trial">Trial</span>',
+      yearly: '<span class="badge badge-yearly">Yearly</span>',
+      lifetime: '<span class="badge badge-lifetime">∞ Lifetime</span>',
+    }[u.plan] || '<span class="badge badge-trial">Trial</span>';
+
+    // Status badge
+    let statusBadge;
+    if (isBlocked) {
+      statusBadge = '<span class="badge badge-blocked">🚫 Blocked</span>';
+    } else if (u.plan === 'lifetime') {
+      statusBadge = '<span class="badge badge-ok">✓ Active</span>';
+    } else if (u.daysLeft === null || u.daysLeft === undefined) {
+      statusBadge = '<span class="badge badge-warn">No expiry set</span>';
+    } else if (u.daysLeft <= 0) {
+      statusBadge = '<span class="badge badge-bad">✗ Expired</span>';
+    } else if (u.daysLeft <= 14) {
+      statusBadge = `<span class="badge badge-warn">⚠ ${u.daysLeft}d left</span>`;
+    } else {
+      statusBadge = `<span class="badge badge-ok">✓ ${u.daysLeft}d left</span>`;
+    }
+
+    // Expiry
+    const expiry = u.plan === 'lifetime' ? '—' : (u.licenseExpiry || '—');
+
+    // Last login
+    const lastLogin = u.lastLogin ? fmtDate(u.lastLogin) : '—';
+    const createdAt = u.createdAt ? fmtDate(u.createdAt) : '—';
+
+    // Devices
+    const devCell = `<span style="cursor:pointer;text-decoration:underline dotted;color:var(--muted2)" onclick="openDevicesModal('${u.email}')">${u.deviceCount} / ${u.maxDevices}</span>`;
+
+    // Sync
+    const syncCell = u.cloudSync
+      ? '<span class="bool-yes">✓ Yes</span>'
+      : '<span class="bool-no">— No</span>';
+
+    // Actions
+    const blockBtn = isBlocked
+      ? `<button class="act-btn success" onclick="doAction('unblock','${u.email}')">Unblock</button>`
+      : `<button class="act-btn danger" onclick="doAction('block','${u.email}')">Block</button>`;
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td class="row-num">${i + 1}</td>
+      <td style="font-family:var(--mono);color:var(--text)">${u.email}</td>
+      <td>${planBadge}</td>
+      <td style="font-family:var(--mono);color:var(--muted2)">${expiry}</td>
+      <td style="font-family:var(--mono)">${u.plan === 'lifetime' ? '<span class="bool-yes">∞</span>' : (u.daysLeft !== null ? u.daysLeft : '—')}</td>
+      <td>${statusBadge}</td>
+      <td>${devCell}</td>
+      <td>${syncCell}</td>
+      <td style="font-family:var(--mono);color:var(--muted);font-size:.68rem">${lastLogin}</td>
+      <td style="font-family:var(--mono);color:var(--muted);font-size:.68rem">${createdAt}</td>
+      <td>
+        <div class="actions">
+          <button class="act-btn info" onclick="openExtendModal('${u.email}')">Extend</button>
+          <button class="act-btn purple" onclick="doAction('lifetime','${u.email}')">Lifetime</button>
+          ${blockBtn}
+          <button class="act-btn warn" onclick="doAction('relogin','${u.email}')">Re-login</button>
+          <button class="act-btn danger" onclick="openDeleteModal('${u.email}')">Delete</button>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
+
+  document.getElementById('tableState').style.display = 'none';
+  document.getElementById('usersTable').style.display = '';
+}
+
+// ── FILTER / SORT ──
+window.filterTable = () => renderTable();
+
+window.filterPlan = (plan) => {
+  currentFilter = plan;
+  renderTable();
+};
+
+window.sortBy = (key) => {
+  if (currentSort.key === key) currentSort.dir *= -1;
+  else { currentSort.key = key; currentSort.dir = 1; }
+  renderTable();
+};
+
+// ── MODALS ──
+let modalActionFn = null;
+
+function openModal(title, sub, bodyHtml, confirmText, confirmClass, fn) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalSub').innerHTML = sub;
+  document.getElementById('modalBody').innerHTML = bodyHtml;
+  const btn = document.getElementById('modalConfirm');
+  btn.textContent = confirmText;
+  btn.className = 'modal-confirm' + (confirmClass ? ' ' + confirmClass : '');
+  btn.disabled = false;
+  modalActionFn = fn;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+window.closeModal = () => {
+  document.getElementById('modalOverlay').classList.remove('open');
+  modalActionFn = null;
+};
+
+window.modalAction = async () => {
+  if (modalActionFn) {
+    const btn = document.getElementById('modalConfirm');
+    btn.disabled = true; btn.textContent = 'Working…';
+    await modalActionFn();
+  }
+};
+
+document.getElementById('modalOverlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+});
+
+// CREATE
+window.openCreateModal = () => {
+  openModal(
+    'Create New User',
+    'Creates a trial account (30 days, 2 devices, no cloud sync).',
+    `<div class="modal-field"><label>Email</label><input id="m_email" type="email" placeholder="user@example.com"></div>
+     <div class="modal-field"><label>Password</label><input id="m_pass" type="text" placeholder="min 6 characters"></div>`,
+    '+ Create User', '',
+    async () => {
+      const email = document.getElementById('m_email').value.trim();
+      const password = document.getElementById('m_pass').value.trim();
+      if (!email || !password) { toast('Fill all fields', 'err'); document.getElementById('modalConfirm').disabled = false; document.getElementById('modalConfirm').textContent = '+ Create User'; return; }
+      await callAction({ action: 'create', email, password });
+    }
+  );
+};
+
+// EXTEND
+window.openExtendModal = (email) => {
+  openModal(
+    'Extend / Upgrade License',
+    `Upgrading <strong>${email}</strong> to Yearly plan.`,
+    `<div class="modal-field"><label>Days to add</label>
+     <select id="m_days">
+       <option value="365">365 days (1 year)</option>
+       <option value="180">180 days (6 months)</option>
+       <option value="90">90 days (3 months)</option>
+       <option value="30">30 days</option>
+     </select></div>`,
+    'Extend License', '',
+    async () => {
+      const days = parseInt(document.getElementById('m_days').value);
+      await callAction({ action: 'extend', email, days });
+    }
+  );
+};
+
+// DELETE
+window.openDeleteModal = (email) => {
+  openModal(
+    'Delete User',
+    `This will permanently delete <strong>${email}</strong> — auth, Firestore data, and all devices. This cannot be undone.`,
+    `<div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:.9rem;font-size:.75rem;color:var(--red);font-family:var(--mono)">⚠ Permanent action — cannot be undone</div>`,
+    'Delete Permanently', 'danger',
+    async () => { await callAction({ action: 'delete', email }); }
+  );
+};
+
+// DEVICES
+window.openDevicesModal = (email) => {
+  const user = allUsers.find(u => u.email === email);
+  if (!user) return;
+
+  let devicesHtml = '';
+  if (!user.devices || user.devices.length === 0) {
+    devicesHtml = '<div style="color:var(--muted);font-size:.75rem;text-align:center;padding:1rem">No devices registered</div>';
+  } else {
+    devicesHtml = user.devices.map(d => {
+      const lastSeen = d.lastSeen?.seconds
+        ? fmtDate(new Date(d.lastSeen.seconds * 1000).toISOString())
+        : (d.lastSeen ? fmtDate(d.lastSeen) : '—');
+      return `
+        <div class="device-row">
+          <div class="device-info">
+            <div class="device-name">${d.name || 'Unknown Device'}</div>
+            <div class="device-meta">${d.id || ''} · ${d.platform || ''} · Last seen: ${lastSeen}</div>
+          </div>
+          <button class="device-rm" onclick="removeDevice('${email}','${d.id}')">Remove</button>
+        </div>`;
+    }).join('');
+  }
+
+  openModal(
+    `Devices — ${email}`,
+    `${user.deviceCount} of ${user.maxDevices} slots used.`,
+    `<div class="devices-panel">${devicesHtml}</div>`,
+    'Close', '',
+    async () => closeModal()
+  );
+  document.getElementById('modalConfirm').textContent = 'Done';
+};
+
+window.removeDevice = async (email, deviceId) => {
+  if (!confirm(`Remove device ${deviceId}?`)) return;
+  closeModal();
+  await callAction({ action: 'removedevice', email, deviceId });
+};
+
+// ── DIRECT ACTIONS ──
+window.doAction = async (action, email) => {
+  const labels = {
+    block: `Block ${email}?`,
+    unblock: `Unblock ${email}?`,
+    lifetime: `Set lifetime license for ${email}?`,
+    relogin: `Force re-login for ${email}?`,
+  };
+  if (!confirm(labels[action] || action)) return;
+  await callAction({ action, email });
+};
+
+// ── API CALL ──
+async function callAction(body) {
+  try {
+    idToken = await auth.currentUser.getIdToken(true);
+    const res = await fetch('/api/action', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${idToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.error);
+    toast(`✓ Done: ${body.action}`, 'ok');
+    closeModal();
+    await loadUsers();
+  } catch (e) {
+    toast(`✗ ${e.message}`, 'err');
+    const btn = document.getElementById('modalConfirm');
+    if (btn) { btn.disabled = false; btn.textContent = 'Retry'; }
+  }
+}
+
+// ── TOAST ──
+function toast(msg, type = 'ok') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = `toast ${type} show`;
+  setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+// ── DATE FORMAT ──
+function fmtDate(str) {
+  if (!str) return '—';
+  const d = new Date(str);
+  if (isNaN(d)) return str;
+  return d.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+</script>
+</body>
+</html>
